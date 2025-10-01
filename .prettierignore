@@ -1,0 +1,2 @@
+# Ignore n8n workflow files to preserve their formatting
+workflows/**/*.json

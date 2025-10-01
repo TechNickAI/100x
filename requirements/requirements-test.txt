@@ -1,0 +1,11 @@
+# Production requirements + what is required for running tests
+# Mainly used for CI environment, local development should use requirements-dev.txt
+-r requirements.txt
+pytest
+pytest-cov
+pytest-mock
+# pytest sugar for better test output
+# not strictly required for testing, but makes the output better in CI
+pytest-sugar
+pytest-rerunfailures
+pytest-xdist

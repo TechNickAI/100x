@@ -1,0 +1,6 @@
+# Install this for local development. See dev-plus for extra goodies
+-r requirements.txt
+-r requirements-test.txt
+pip-tools
+pre-commit
+ruff

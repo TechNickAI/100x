@@ -1,0 +1,89 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#5fe1ff",
+    "activityBar.background": "#5fe1ff",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#ff20d5",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#15202b99",
+    "sash.hoverBorder": "#5fe1ff",
+    "statusBar.background": "#2cd8ff",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#00caf8",
+    "statusBarItem.remoteBackground": "#2cd8ff",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#2cd8ff",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#2cd8ff99",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "2CD8FF",
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.rulers": [88],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "files.associations": {
+    "*.mdc": "markdown"
+  },
+  "files.exclude": {
+    "**/__pycache__": true,
+    ".pytest_cache": true,
+    ".ruff_cache": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true,
+    "**/coverage": true,
+    "**/.pytest_cache": true,
+    "**/__pycache__": true
+  }, // Faster search by excluding build artifacts
+  "window.title": "100x - ${activeEditorShort}${dirty}",
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.insertSpaces": true,
+    "editor.autoIndent": "keep",
+    "editor.tabSize": 2,
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "cSpell.words": ["frontmatter", "lifelog", "lifelogs", "Logfire", "pytest"]
+}

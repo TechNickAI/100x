@@ -85,3 +85,14 @@ repos:
     hooks:
       - id: actionlint
         name: Check Github Actions
+
+  # Local hooks for project-specific validation
+  - repo: local
+    hooks:
+      - id: validate-agent-files
+        name: Validate .agent.md files
+        entry: python scripts/validate_agents.py
+        language: system
+        files: '\.agent\.md$'
+        pass_filenames: true
+        description: Validate .agent.md files for syntax and structure

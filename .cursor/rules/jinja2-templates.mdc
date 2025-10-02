@@ -1,0 +1,212 @@
+---
+description: Jinja2 template style and best practices for 100x
+alwaysApply: false
+---
+
+# Jinja2 Templates - 100x Style
+
+## Our Conventions
+
+### Comments
+
+Use `{# #}` syntax (not `{% comment %}`):
+
+```jinja2
+{# This explains why we do something specific #}
+
+{#
+Multi-line explanation
+of complex template logic
+#}
+```
+
+### Whitespace Control for Clean Output
+
+**Strip trailing newlines in lists:**
+
+```jinja2
+{% for item in items -%}
+{{ item }}
+{% endfor -%}
+```
+
+No blank lines between items.
+
+**Strip whitespace around variables:**
+
+```jinja2
+The agent {{- " " -}}{{ agent_name }}{{- " " -}} is ready.
+```
+
+Precise spacing control when needed.
+
+**Use `-` liberally to prevent unwanted blank lines in prompts.**
+
+### Variable Naming
+
+Follow Python conventions in templates:
+
+```jinja2
+{# Good #}
+{{ user_name }}
+{{ total_count }}
+{{ is_authenticated }}
+
+{# Bad #}
+{{ UserName }}
+{{ totalCount }}
+{{ auth }}
+```
+
+## Non-Obvious Patterns
+
+### Default Values vs. Conditionals
+
+**For optional display:**
+
+```jinja2
+{# Good - clean and readable #}
+{% if optional_field %}
+{{ optional_field }}
+{% endif %}
+
+{# Avoid - harder to read #}
+{{ optional_field|default('') }}
+```
+
+**For data processing:**
+
+```jinja2
+{# Good - prevents errors #}
+{{ count|default(0) }}
+{{ items|default([])|length }}
+```
+
+### Loop Control
+
+Access loop metadata without setting variables:
+
+```jinja2
+{% for item in items %}
+{{ loop.index }}. {{ item }}  {# 1-based #}
+{% if not loop.last %}, {% endif %}  {# Comma between items #}
+{% endfor %}
+```
+
+### Environment Setup (for reference)
+
+Our BaseAgent configures Jinja2 with:
+
+```python
+Environment(
+    loader=FileSystemLoader(["ai/agents", "ai/agents/shared"]),
+    autoescape=False,  # We render prompts, not HTML
+)
+```
+
+This means:
+
+- Can `{% include 'shared/file.jinja' %}` from `ai/agents/shared/`
+- Can `{% include 'file.jinja' %}` from `ai/agents/`
+- No HTML escaping (we're rendering prompts)
+
+## Project-Specific Patterns
+
+### Heart-Centered Prompt
+
+Always include in system prompts:
+
+```jinja2
+{{ heart_centered_prompt }}
+```
+
+This variable is auto-injected by BaseAgent (no need to pass it).
+
+### Agent Metadata
+
+These are auto-injected:
+
+```jinja2
+{{ agent_name }}          {# From YAML frontmatter #}
+{{ agent_description }}   {# From YAML frontmatter #}
+{{ model_name }}          {# Current model being used #}
+{{ query_count }}         {# How many queries in this session #}
+```
+
+### Includes for Shared Components
+
+```jinja2
+{% include 'shared/heart_centered.jinja' %}
+{% include 'shared/common_instructions.jinja' %}
+```
+
+Files go in `ai/agents/shared/` directory.
+
+## What NOT to Do
+
+### Don't Put Logic in Templates
+
+```jinja2
+{# Bad - calculations in template #}
+{% set total = (price * quantity * 1.08) + shipping %}
+
+{# Good - pass calculated values in context #}
+{{ total_with_tax }}
+```
+
+Templates display data. Python calculates data.
+
+### Don't Abuse Filters
+
+```jinja2
+{# Bad - chaining too many transformations #}
+{{ text|lower|trim|replace(' ', '_')|upper }}
+
+{# Good - do complex transforms in Python #}
+{{ normalized_text }}
+```
+
+### Don't Nest Too Deeply
+
+```jinja2
+{# Bad - hard to read #}
+{% if a %}
+  {% if b %}
+    {% if c %}
+      content
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{# Good - combine conditions #}
+{% if a and b and c %}
+  content
+{% endif %}
+```
+
+## Testing Templates
+
+Test rendering in isolation:
+
+```python
+from jinja2 import Template
+
+template = Template("Hello {{ name }}")
+result = template.render(name="World")
+assert result == "Hello World"
+```
+
+For agent templates, test through AgentConfig:
+
+```python
+config = AgentConfig.from_file("agent.agent.md")
+rendered = config.render_user_prompt({"query": "test"})
+assert "test" in rendered
+```
+
+## Remember
+
+- Templates are for **display and formatting**, not business logic
+- Use whitespace control (`-`) to keep output clean
+- Keep templates simple - complex logic belongs in Python
+- Comment non-obvious template decisions

@@ -264,7 +264,7 @@ Inter-agent communication happens through internal message passing, API calls, o
 
 **Redis** - In-memory data store serving two purposes: Celery broker/backend for task queue, and caching layer for expensive-to-fetch data (API responses, computed results). Lightweight and fast.
 
-**Django Templates** - Template rendering for `.agent` files. Install Django package but only use `django.template` module standalone, without the web framework.
+**Jinja2** - Template rendering for `.agent` files. Lightweight, purpose-built template engine (1MB vs Django's 10MB) with cleaner syntax and faster rendering. Provides template inheritance, includes, and macros without framework overhead.
 
 **Clerk** - User authentication and management. Handles user sign-up, login, session management.
 
@@ -459,7 +459,7 @@ The CLI provides immediate feedback using `rich` for formatted output and progre
 
 The MVP intentionally avoids web frameworks. Forge monitors ClickUp via polling (checking for new tasks periodically), not webhooks. This eliminates the need for FastAPI or Django initially.
 
-**Template Engine** - Use Django's template engine standalone for rendering `.agent` file prompts. Install Django package but only use `django.template` module, not the full web framework. Alternatively, Jinja2 provides nearly identical syntax.
+**Template Engine** - Use Jinja2 for rendering `.agent` file prompts. Lightweight (1MB), purpose-built for general text templating, and requires zero configuration. If Django gets added later (post-MVP for Django Admin), both template engines can coexist without conflict.
 
 **Agent Registry** - The filesystem IS the registry. Which `.agent` files exist in `agents/prompts/` = which agents exist. No database required.
 
@@ -514,11 +514,11 @@ Note: `api/` directory for FastAPI will be added post-MVP when webhook support i
 
 **BaseAgent Class** - Shared Python class that loads `.agent` files, renders templates, calls OpenRouter, and returns structured output via Pydantic AI. The BaseAgent automatically injects the `heart_centered_prompt` variable into all template contexts, making it available for use in every `.agent` file's system prompt.
 
-**Template Engine** - Uses Django's template engine for rendering `.agent` file prompts. Django templates can be used standalone (install Django package but only use `django.template` module, not the full framework). This provides the template syntax (`{% comment %}`, `{{ variables }}`, `{% include %}`) without requiring the Django web framework.
+**Template Engine** - Uses Jinja2 for rendering `.agent` file prompts. Lightweight, purpose-built template engine with clean syntax for variables (`{{ variable }}`), loops (`{% for %}`), conditionals (`{% if %}`), comments (`{# comment #}`), template inheritance (`{% extends %}`), and includes (`{% include %}`). Zero configuration required.
 
 The BaseAgent loads the heart-centered prompt via `get_prompt(detail_level="terse")` from the heart-centered-prompts package and makes it available as `{{ heart_centered_prompt }}` in all agent templates. This ensures every agent starts with compassionate, emotionally intelligent grounding.
 
-If using Jinja2 instead, the syntax is nearly identical and `.agent` files remain compatible with minor adjustments.
+If Django gets added later (post-MVP for Django Admin), both Jinja2 and Django templates can coexist without conflict.
 
 ### Database and Caching Strategy
 
@@ -670,15 +670,15 @@ This separation ensures agents can modify their own code and configuration witho
 
 ### Agent Definition Format
 
-Agents are defined using `.agent` files - a declarative format combining YAML configuration with Django template prompts. This keeps agent definitions version-controlled, human-readable, and easy for both humans and AI to modify.
+Agents are defined using `.agent` files - a declarative format combining YAML configuration with Jinja2 template prompts. This keeps agent definitions version-controlled, human-readable, and easy for both humans and AI to modify.
 
 **File Structure:**
 
 The `.agent` file has three sections separated by `---` markers:
 
 1. **YAML Frontmatter** - Configuration and metadata
-2. **System Prompt** - Agent identity and expertise (Django template)
-3. **User Prompt** - Task-specific context (Django template with variables)
+2. **System Prompt** - Agent identity and expertise (Jinja2 template)
+3. **User Prompt** - Task-specific context (Jinja2 template with variables)
 
 **YAML Configuration includes:**
 
@@ -690,9 +690,9 @@ The `.agent` file has three sections separated by `---` markers:
 - `evolution_history`: List of versions with dates and change notes
 - `dependencies`: MCP servers or external tools the agent requires
 
-**System Prompt** defines who the agent is, what it knows, and how it thinks. Uses Django template syntax with `{% comment %}` blocks to document the reasoning behind each section. Can include shared prompt components like heart-centered grounding.
+**System Prompt** defines who the agent is, what it knows, and how it thinks. Uses Jinja2 template syntax with `{# comment #}` blocks to document the reasoning behind each section. Can include shared prompt components like heart-centered grounding.
 
-**User Prompt** provides task-specific context using Django template variables. Variables like `{{ current_rate }}` or `{{ meeting_transcript }}` get injected at runtime based on the work being performed.
+**User Prompt** provides task-specific context using Jinja2 template variables. Variables like `{{ current_rate }}` or `{{ meeting_transcript }}` get injected at runtime based on the work being performed.
 
 **Benefits of .agent Files:**
 
@@ -745,9 +745,7 @@ dependencies:
 
 {{ heart_centered_prompt }}
 
-{% comment %}
-Identity and expertise - what this agent does
-{% endcomment %}
+{# Identity and expertise - what this agent does #}
 
 We specialize in analyzing conversations and identifying firm commitments. We distinguish between casual discussion ("I might look into that") and actual commitments ("I'll have the report to you by Friday").
 
@@ -760,9 +758,7 @@ We assign confidence scores (0-100) based on language certainty and context.
 
 --- USER PROMPT ---
 
-{% comment %}
-Runtime context injected when agent runs
-{% endcomment %}
+{# Runtime context injected when agent runs #}
 
 Conversation Transcript:
 {{ transcript }}

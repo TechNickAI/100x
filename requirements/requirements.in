@@ -1,1 +1,15 @@
+arrow
+click
 heart-centered-prompts
+httpx
+jinja2
+logfire
+loguru
+pydantic
+pydantic-ai
+pydantic-settings
+python-dotenv
+python-frontmatter
+rich
+ruamel-yaml
+ujson

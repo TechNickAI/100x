@@ -153,4 +153,3 @@ class TestUnifiedLogger:
 
         result = unified_logger._format_attributes(unimportant="data")
         assert result == ""
-

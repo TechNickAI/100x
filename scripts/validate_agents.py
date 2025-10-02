@@ -37,7 +37,7 @@ def main():
     # Show errors if any
     if results:
         output = format_validation_results(results, "human")
-        print(output, file=sys.stderr)
+        print(output, file=sys.stderr)  # noqa: T201
         return 1
 
     return 0
@@ -45,4 +45,3 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-

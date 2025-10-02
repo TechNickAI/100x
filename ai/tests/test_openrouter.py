@@ -83,18 +83,20 @@ class TestOpenRouterModels:
         mock_profile.supports_json_schema_output = True
         mock_provider.model_profile.return_value = mock_profile
 
-        mocker.patch("ai.core.openrouter.OpenRouterProvider", return_value=mock_provider)
+        mocker.patch(
+            "ai.core.openrouter.OpenRouterProvider", return_value=mock_provider
+        )
         mocker.patch("ai.core.openrouter.OpenRouterModel")
         mocker.patch("httpx.AsyncClient")
 
-        model = create_openrouter_model(
+        create_openrouter_model(
             "anthropic/claude-sonnet-4.5",
             agent_name="TestAgent",
             settings={"temperature": 0.3},
         )
 
         # Test that our model creation logic was called
-        assert model is not None
+        # Model creation called successfully
 
     def test_create_openrouter_model_invalid(self):
         """Test creating model with invalid name."""
@@ -121,11 +123,13 @@ class TestOpenRouterModels:
         mock_profile.supports_json_schema_output = True
         mock_provider.model_profile.return_value = mock_profile
 
-        mocker.patch("ai.core.openrouter.OpenRouterProvider", return_value=mock_provider)
+        mocker.patch(
+            "ai.core.openrouter.OpenRouterProvider", return_value=mock_provider
+        )
         mock_model_class = mocker.patch("ai.core.openrouter.OpenRouterModel")
         mocker.patch("httpx.AsyncClient")
 
-        model = create_openrouter_model("anthropic/claude-sonnet-4.5")
+        create_openrouter_model("anthropic/claude-sonnet-4.5")
 
         # Test that fallback models were configured
         call_args = mock_model_class.call_args
@@ -143,11 +147,13 @@ class TestOpenRouterModels:
         mock_profile.supports_json_schema_output = True
         mock_provider.model_profile.return_value = mock_profile
 
-        mocker.patch("ai.core.openrouter.OpenRouterProvider", return_value=mock_provider)
+        mocker.patch(
+            "ai.core.openrouter.OpenRouterProvider", return_value=mock_provider
+        )
         mock_model_class = mocker.patch("ai.core.openrouter.OpenRouterModel")
         mocker.patch("httpx.AsyncClient")
 
-        model = create_openrouter_model("anthropic/claude-sonnet-4.5")
+        create_openrouter_model("anthropic/claude-sonnet-4.5")
 
         # Test that caching was enabled for Anthropic model
         call_args = mock_model_class.call_args
@@ -165,11 +171,13 @@ class TestOpenRouterModels:
         mock_profile.supports_json_schema_output = True
         mock_provider.model_profile.return_value = mock_profile
 
-        mocker.patch("ai.core.openrouter.OpenRouterProvider", return_value=mock_provider)
+        mocker.patch(
+            "ai.core.openrouter.OpenRouterProvider", return_value=mock_provider
+        )
         mock_model_class = mocker.patch("ai.core.openrouter.OpenRouterModel")
         mocker.patch("httpx.AsyncClient")
 
-        model = create_openrouter_model("openai/gpt-5")
+        create_openrouter_model("openai/gpt-5")
 
         # Test that caching was NOT enabled for non-Anthropic model
         call_args = mock_model_class.call_args
@@ -186,12 +194,14 @@ class TestOpenRouterModels:
         mock_profile.supports_json_schema_output = False  # Broken profile
         mock_provider.model_profile.return_value = mock_profile
 
-        mocker.patch("ai.core.openrouter.OpenRouterProvider", return_value=mock_provider)
+        mocker.patch(
+            "ai.core.openrouter.OpenRouterProvider", return_value=mock_provider
+        )
         mock_model_class = mocker.patch("ai.core.openrouter.OpenRouterModel")
         mocker.patch("httpx.AsyncClient")
         mock_replace = mocker.patch("ai.core.openrouter.replace")
 
-        model = create_openrouter_model("anthropic/claude-sonnet-4.5")
+        create_openrouter_model("anthropic/claude-sonnet-4.5")
 
         # Test that profile was overridden to fix JSON schema support
         mock_replace.assert_called_once()

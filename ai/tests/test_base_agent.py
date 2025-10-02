@@ -10,16 +10,22 @@ from ai.core.config import config
 class TestBaseAgent:
     """Test suite for BaseAgent."""
 
-    def test_init_agent(self):
+    def test_init_agent(self, mocker):
         """Test agent initialization."""
+        # Mock OpenRouter to avoid needing API key
+        mocker.patch("ai.agents.base_agent.create_openrouter_model")
+
         agent = BaseAgent("ai/tests/fixtures/simple_test.agent.md")
 
         assert agent.config.name == "Simple Test Agent"
         assert agent.model_name == "anthropic/claude-sonnet-4.5"
         assert agent.temperature == 0.5
 
-    def test_explain(self):
+    def test_explain(self, mocker):
         """Test explain method."""
+        # Mock OpenRouter to avoid needing API key
+        mocker.patch("ai.agents.base_agent.create_openrouter_model")
+
         agent = BaseAgent("ai/tests/fixtures/simple_test.agent.md")
 
         explanation = agent.explain()
@@ -67,8 +73,11 @@ class TestBaseAgent:
         assert "model" in usage
         assert "total_cost" in usage
 
-    def test_model_override(self):
+    def test_model_override(self, mocker):
         """Test model override parameter."""
+        # Mock OpenRouter to avoid needing API key
+        mocker.patch("ai.agents.base_agent.create_openrouter_model")
+
         agent = BaseAgent(
             "ai/tests/fixtures/simple_test.agent.md",
             model_override="anthropic/claude-3.5-haiku",
@@ -76,8 +85,11 @@ class TestBaseAgent:
 
         assert agent.model_name == "anthropic/claude-3.5-haiku"
 
-    def test_temperature_override(self):
+    def test_temperature_override(self, mocker):
         """Test temperature override parameter."""
+        # Mock OpenRouter to avoid needing API key
+        mocker.patch("ai.agents.base_agent.create_openrouter_model")
+
         agent = BaseAgent(
             "ai/tests/fixtures/simple_test.agent.md",
             temperature_override=0.8,
@@ -100,8 +112,11 @@ class TestBaseAgent:
         with pytest.raises(ValueError, match="Must provide"):
             agent.query()
 
-    def test_repr(self):
+    def test_repr(self, mocker):
         """Test string representation."""
+        # Mock OpenRouter to avoid needing API key
+        mocker.patch("ai.agents.base_agent.create_openrouter_model")
+
         agent = BaseAgent("ai/tests/fixtures/simple_test.agent.md")
 
         repr_str = repr(agent)

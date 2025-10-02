@@ -2,10 +2,15 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/TechNickAI/100x/build.yml?branch=main&label=build&style=flat-square)](https://github.com/TechNickAI/100x/actions/workflows/build.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/TechNickAI/100x?style=flat-square)](https://app.codecov.io/gh/TechNickAI/100x)
+[![Python](https://img.shields.io/badge/python-3.13-blue?style=flat-square)](https://www.python.org/downloads/release/python-3130/)
 [![Pydantic](https://img.shields.io/badge/Pydantic-AI-4EA94B?style=flat-square&logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
 [![pytest](https://img.shields.io/badge/pytest-testing-0A9EDC?style=flat-square&logo=pytest)](https://docs.pytest.org/)
-[![Python](https://img.shields.io/badge/python-3.13-blue?style=flat-square)](https://www.python.org/downloads/release/python-3130/)
 [![License](https://img.shields.io/badge/license-Fair%20Use-yellow?style=flat-square)](LICENSE)
+
+[![OpenRouter](https://img.shields.io/badge/OpenRouter-LLM%20gateway-412991?style=flat-square)](https://openrouter.ai/)
+[![Anthropic Claude](https://img.shields.io/badge/Anthropic-Claude-191919?style=flat-square)](https://www.anthropic.com/)
+[![Logfire](https://img.shields.io/badge/Logfire-observability-FF6B35?style=flat-square)](https://logfire.pydantic.dev/)
+[![Heart Centered Prompts](https://img.shields.io/badge/Heart%20Centered%20Prompts-FF6B9D?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHRleHQgeD0iOCIgeT0iMTIiIGZvbnQtc2l6ZT0iMTIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuKdpO+4jzwvdGV4dD48L3N2Zz4=&logoColor=white)](https://github.com/technickai/heart-centered-prompts)
 
 <img alt="100x Logo" src="./logo.png" style="width:25%" align="right"/>
 

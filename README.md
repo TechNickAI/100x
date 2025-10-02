@@ -66,8 +66,6 @@ Having an AI execution partner that turns visions into reality. Whether launchin
 
 ## 🔨 The Core Insight: Self-Building AI Workforce
 
-This isn't just AI automation—it's an AI workforce that builds itself.
-
 **How it works from your perspective:**
 
 ```mermaid

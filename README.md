@@ -1,18 +1,20 @@
-# 100x: AI Agents That Build Themselves
+# 100x Your Life with an AI Team
 
 <img alt="100x Logo" src="./logo.png" style="width:25%" align="right"/>
 
-**When AI agents can build other AI agents, your workforce evolves to meet whatever you need.**
+**Move at the speed of creativity. Execute on your visions. Stop drowning in information.**
 
-The gap between knowing about AI and actually using it is embarrassingly large. Even people building AI struggle to apply that expertise to their own lives. 100x solves this: agents recognize when they lack a capability—and create the missing agent themselves.
+You know AI could transform your work. You've heard about automation tools but they're too complex. You can see the value of AI employees but don't know how to build them.
+
+This gives you a team of AI employees that builds itself. You describe what you need in plain English. The AI generates the agent, you review the code, and your workforce grows. Every agent can create new agents when it hits a limitation.
 
 ---
 
-## 🎯 What We're Building
+## 🎯 What You Get
 
-Imagine having a team of AI employees helping you execute on your visions, where you can move at the speed of creativity.
+A team of AI employees helping you execute on your visions. Move at the speed of creativity.
 
-Here's what that looks like:
+Specifically:
 
 - Every conversation and meeting gets processed, extracting commitments with context
 - Your knowledge base stays current without manual updates
@@ -39,7 +41,7 @@ Building an AI team where before there was only you. Specialized agents handle c
 
 ### **100x → Creativity**
 
-Having an AI execution partner that turns visions into reality. Whether launching ventures, coordinating social impact, or validating research—the AI handles analysis, development, and deployment. **The barrier between imagining and executing dissolves.**
+Having an AI execution partner that turns visions into reality. Whether launching ventures, coordinating social impact, or validating research—the AI handles analysis, development, and deployment. **Go from idea to working prototype in days, not months.**
 
 ## 🔨 The Core Insight: Forge the Coder
 
@@ -141,12 +143,12 @@ Once Forge works:
 
 ### Long-Term Vision
 
-It evolves based on actual use:
+Your AI workforce evolves with you:
 
 - Agents recognize patterns and create specialized helpers
 - Capabilities improve from real-world experience
 - New agents emerge from identified gaps
-- Human creativity flows into execution without friction
+- You spend time on creative decisions, not implementation details
 
 ## 📚 Documentation
 

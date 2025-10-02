@@ -82,9 +82,15 @@ class BaseAgent:
         # Load agent configuration
         self.config = AgentConfig.from_file(self.agent_file)
 
-        # Apply overrides
-        self.model_name = model_override or self.config.model_name
-        self.temperature = temperature_override or self.config.temperature
+        # Apply overrides (explicit None check to honor zero values)
+        self.model_name = (
+            model_override if model_override is not None else self.config.model_name
+        )
+        self.temperature = (
+            temperature_override
+            if temperature_override is not None
+            else self.config.temperature
+        )
 
         # Load structured output if defined
         self.result_type = None

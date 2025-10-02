@@ -97,6 +97,19 @@ class TestBaseAgent:
 
         assert agent.temperature == 0.8
 
+    def test_temperature_zero_override(self, mocker):
+        """Test that temperature=0.0 override is honored (not treated as falsy)."""
+        # Mock OpenRouter to avoid needing API key
+        mocker.patch("ai.agents.base_agent.create_openrouter_model")
+
+        agent = BaseAgent(
+            "ai/tests/fixtures/simple_test.agent.md",
+            temperature_override=0.0,
+        )
+
+        # Zero should be honored, not fall back to config value (0.5)
+        assert agent.temperature == 0.0
+
     def test_agent_not_found(self):
         """Test that missing agent file raises error."""
         with pytest.raises(FileNotFoundError):

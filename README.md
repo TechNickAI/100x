@@ -1,5 +1,10 @@
 # 100x Your Life with an AI Team
 
+[![Build Status](https://img.shields.io/github/actions/workflow/status/TechNickAI/100x/build.yml?branch=main&label=build&style=flat-square)](https://github.com/TechNickAI/100x/actions/workflows/build.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/TechNickAI/100x?style=flat-square)](https://app.codecov.io/gh/TechNickAI/100x)
+[![Python](https://img.shields.io/badge/python-3.13-blue?style=flat-square)](https://www.python.org/downloads/release/python-3130/)
+[![License](https://img.shields.io/badge/license-Fair%20Use-yellow?style=flat-square)](LICENSE)
+
 <img alt="100x Logo" src="./logo.png" style="width:25%" align="right"/>
 
 **Reclaim your presence. Build an AI team. Move at the speed of creativity.**
@@ -80,33 +85,35 @@ graph LR
 
 This table shows actual implementation status versus planned functionality:
 
-| Phase                              | Component                    | Status         | Description                                     |
-| ---------------------------------- | ---------------------------- | -------------- | ----------------------------------------------- |
-| **Phase 0: Bootstrap**             |                              |                |                                                 |
-|                                    | Repository Setup             | ✅ Complete    | Tooling, AI rules, pre-commit hooks, CI/CD      |
-|                                    | Agent Infrastructure         | 🚧 In Progress | Pydantic AI, OpenRouter, Logfire, Redis, Celery |
-|                                    | BaseAgent Framework          | ⬜ Not Started | Agent definition and execution framework        |
-|                                    | Forge the Coder              | ⬜ Not Started | The bootstrap agent that creates all others     |
-|                                    | Git/gh CLI Integration       | ⬜ Not Started | Branch and PR creation via CLI tools            |
-|                                    | ClickUp Integration          | ⬜ Not Started | Task monitoring via polling                     |
-| **Phase 1: Knowledge Layer**       |                              |                |                                                 |
-|                                    | Maya the Memory Keeper       | ⬜ Not Started | Knowledge base maintenance from conversations   |
-|                                    | Limitless Integration        | ⬜ Not Started | Personal conversation processing                |
-|                                    | Fireflies Integration        | ⬜ Not Started | Meeting transcript analysis                     |
-|                                    | Notion Provider              | ⬜ Not Started | Knowledge base storage and retrieval            |
-|                                    | Winston the Wolf             | ⬜ Not Started | Privacy protection and data cleanup             |
-| **Phase 2: Commitment Management** |                              |                |                                                 |
-|                                    | Sarah the Commitment Manager | ⬜ Not Started | Commitment extraction and tracking              |
-|                                    | Task Creation Logic          | ⬜ Not Started | Smart routing and assignment                    |
-|                                    | Progress Monitoring          | ⬜ Not Started | Active tracking and escalation                  |
-| **Phase 3: Orchestration**         |                              |                |                                                 |
-|                                    | Piper the Chief of Staff     | ⬜ Not Started | User interface and agent coordinator            |
-|                                    | Agent Registry               | ⬜ Not Started | Discovery and capability matching               |
-|                                    | Inter-Agent Communication    | ⬜ Not Started | Internal delegation patterns                    |
-| **Phase 4: Self-Evolution**        |                              |                |                                                 |
-|                                    | Self-Improvement Logic       | ⬜ Not Started | Agents requesting enhancements                  |
-|                                    | Capability Creation          | ⬜ Not Started | Dynamic capability generation                   |
-|                                    | Evolution Tracking           | ⬜ Not Started | Version history and audit trail                 |
+| Phase                              | Component                    | Status         | Description                                   |
+| ---------------------------------- | ---------------------------- | -------------- | --------------------------------------------- |
+| **Phase 0: Bootstrap**             |                              |                |                                               |
+|                                    | Repository Setup             | ✅ Complete    | Tooling, AI rules, pre-commit hooks, CI/CD    |
+|                                    | Agent Infrastructure         | ✅ Complete    | Pydantic AI, OpenRouter, Logfire, Jinja2      |
+|                                    | BaseAgent Framework          | ✅ Complete    | .agent.md files, parser, execution            |
+|                                    | Agent Validation             | ✅ Complete    | Full validator with pre-commit hook           |
+|                                    | CLI Interface                | ✅ Complete    | Beautiful Click+Rich commands                 |
+|                                    | Forge the Coder              | ⬜ Next        | The bootstrap agent that creates all others   |
+|                                    | Git/gh CLI Integration       | ⬜ Next        | Branch and PR creation via CLI tools          |
+|                                    | ClickUp Integration          | ⬜ Future      | Task monitoring via polling                   |
+| **Phase 1: Knowledge Layer**       |                              |                |                                               |
+|                                    | Maya the Memory Keeper       | ⬜ Not Started | Knowledge base maintenance from conversations |
+|                                    | Limitless Integration        | ⬜ Not Started | Personal conversation processing              |
+|                                    | Fireflies Integration        | ⬜ Not Started | Meeting transcript analysis                   |
+|                                    | Notion Provider              | ⬜ Not Started | Knowledge base storage and retrieval          |
+|                                    | Winston the Wolf             | ⬜ Not Started | Privacy protection and data cleanup           |
+| **Phase 2: Commitment Management** |                              |                |                                               |
+|                                    | Sarah the Commitment Manager | ⬜ Not Started | Commitment extraction and tracking            |
+|                                    | Task Creation Logic          | ⬜ Not Started | Smart routing and assignment                  |
+|                                    | Progress Monitoring          | ⬜ Not Started | Active tracking and escalation                |
+| **Phase 3: Orchestration**         |                              |                |                                               |
+|                                    | Piper the Chief of Staff     | ⬜ Not Started | User interface and agent coordinator          |
+|                                    | Agent Registry               | ⬜ Not Started | Discovery and capability matching             |
+|                                    | Inter-Agent Communication    | ⬜ Not Started | Internal delegation patterns                  |
+| **Phase 4: Self-Evolution**        |                              |                |                                               |
+|                                    | Self-Improvement Logic       | ⬜ Not Started | Agents requesting enhancements                |
+|                                    | Capability Creation          | ⬜ Not Started | Dynamic capability generation                 |
+|                                    | Evolution Tracking           | ⬜ Not Started | Version history and audit trail               |
 
 Legend: ✅ Complete | 🚧 In Progress | ⬜ Not Started
 
@@ -116,7 +123,7 @@ Built with modern, proven technologies:
 
 - **Python 3.13+** with async support and type hints
 - **Pydantic AI** for structured agent outputs and LLM interactions
-- **OpenRouter** for unified LLM access (Claude Sonnet 4.5 default)
+- **OpenRouter** for unified LLM access (see ai/core/openrouter.py for models)
 - **Celery + Redis** for task queue and caching
 - **Logfire** for comprehensive observability
 - **Click + Rich** for beautiful CLI tools

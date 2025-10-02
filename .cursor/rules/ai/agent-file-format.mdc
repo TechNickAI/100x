@@ -1,64 +1,261 @@
 ---
-description: When creating or editing .agent files
+description: When creating or editing .agent.md files
 alwaysApply: false
 ---
 
-# Agent File Format
+# Agent File Format (.agent.md)
 
 ## Structure
 
-```
+All agents are defined in `.agent.md` files - markdown with YAML frontmatter and HTML comment sections.
+
+```markdown
 ---
-SYSTEM PROMPT
+name: Agent Name
+description: Brief description of what this agent does
+model: anthropic/claude-sonnet-4.5
+temperature: 0.7
+purpose: |
+  Detailed explanation of the agent's purpose for other
+  agents to understand during inter-agent communication.
+capabilities:
+  - capability_one
+  - capability_two
+evolution_history:
+  - version: 1
+    date: 2025-01-15
+    notes: Initial implementation
 ---
 
-## Identity and Capabilities
+# Agent Name
+
+Human-readable description and documentation.
+
+<!-- System Prompt -->
+
+\`\`\`jinja2
+{{ heart_centered_prompt }}
 
 Define who the agent IS and what it can do...
+\`\`\`
 
----
-USER PROMPT
----
+<!-- User Prompt -->
 
-## Current Context
-
+\`\`\`jinja2
 Dynamic context with {{ template_variables }}...
+\`\`\`
+
+<!-- Output Schema -->
+
+\`\`\`python
+from pydantic import BaseModel, Field
+
+class Output(BaseModel):
+"""Agent's structured output."""
+
+    field_name: str = Field(description="Field description")
+    confidence: float = Field(ge=0.0, le=1.0)
+
+\`\`\`
 ```
 
-## Prompt Engineering for Agents
+## Section Markers
+
+Use HTML comments (title case with spaces):
+
+**Required Sections:**
+
+- `<!-- System Prompt -->` - Agent identity and expertise
+- `<!-- User Prompt -->` - Task-specific context with variables
+
+**Optional Sections:**
+
+- `<!-- Output Schema -->` - Python Pydantic model for structured output
+- `<!-- Context Builder -->` - Custom context building logic (advanced)
+- `<!-- Examples -->` - Few-shot examples (future)
+
+## YAML Frontmatter
+
+**Required Fields:**
+
+- `name` - Agent's full name
+- `description` - Brief role description (one line)
+- `model` - OpenRouter model (e.g., `anthropic/claude-sonnet-4`)
+- `temperature` - Model temperature (0.0 - 2.0)
+
+**Recommended Fields:**
+
+- `purpose` - Detailed explanation for other agents (multi-line string)
+- `capabilities` - List of capabilities (for agent discovery)
+- `evolution_history` - Version history with dates and notes
+
+**Optional Fields:**
+
+- `dependencies` - External tools or MCP servers required
+
+## Prompt Engineering
 
 Based on LLM token prediction mechanics:
 
-### System Prompt (Static DNA)
+### System Prompt (Static Identity)
 
-1. Identity: Who the agent IS fundamentally
-2. Philosophy: Core beliefs that guide decisions
-3. Framework: Analytical methodology
-4. Capabilities: What the agent can and cannot do
+1. **Heart-Centered Grounding** - Always include:
+
+   ```jinja2
+   {{ heart_centered_prompt }}
+   ```
+
+2. **Identity** - Who the agent IS fundamentally
+
+3. **Philosophy** - Core beliefs that guide decisions
+
+4. **Framework** - Analytical methodology
+
+5. **Capabilities** - What the agent can and cannot do
 
 ### User Prompt (Dynamic Context)
 
-1. Current State: Present environment/context
-2. Specific Data: The actual information to process
-3. Decision Ask: Clear output request with format
+1. **Current State** - Present environment/context
+
+2. **Specific Data** - The actual information to process
+
+3. **Decision Ask** - Clear output request with format
+
+## Output Schema
+
+**Convention:** Always name the class `Output`
+
+```python
+from pydantic import BaseModel, Field
+
+class Output(BaseModel):
+    """Docstring explaining the schema."""
+
+    field_name: str = Field(description="What this field contains")
+    count: int = Field(ge=0, description="Must be non-negative")
+    items: list[str] = Field(default_factory=list)
+```
+
+**Why Python not YAML:**
+
+- Full IDE autocomplete and type checking
+- Pydantic validation features (validators, computed fields)
+- Better for testing
+- More expressive than JSON Schema
+
+**Optional:** Omit `<!-- Output Schema -->` section entirely for text-only output.
+
+## Template Syntax (Jinja2)
+
+**Variables:**
+
+```jinja2
+{{ variable_name }}
+{{ nested.value }}
+```
+
+**Comments:**
+
+```jinja2
+{# This is a comment #}
+
+{#
+Multi-line comment
+explaining template logic
+#}
+```
+
+**Conditionals:**
+
+```jinja2
+{% if condition %}
+  content
+{% else %}
+  alternative
+{% endif %}
+```
+
+**Loops:**
+
+```jinja2
+{% for item in items %}
+- {{ item }}
+{% endfor %}
+```
+
+**Includes (shared prompts):**
+
+```jinja2
+{% include 'shared/heart_centered.jinja' %}
+{% include 'shared/common_instructions.jinja' %}
+```
 
 ## Best Practices
 
-- All agents must specify their model explicitly
-- Fail fast - let errors bubble up
-- Use structured output with Pydantic models when possible
-- Track evolution in evolution_history when prompts improve
-- Use proper template syntax for variables
+**Identity:**
 
-## Testing
+- All agents must specify their model explicitly
+- Always include `{{ heart_centered_prompt }}` at start of system prompt
+- Define clear purpose for inter-agent discovery
+
+**Error Handling:**
+
+- Fail fast - let errors bubble up
+- Don't swallow exceptions in prompts or logic
+- Trust the observability layer to catch issues
+
+**Structured Output:**
+
+- Use Python Pydantic models (not YAML schemas)
+- Always name the class `Output`
+- Add descriptive Field() definitions
+- Include validators when needed
+
+**Evolution:**
+
+- Track version history in `evolution_history`
+- Document what changed and why
+- Increment version number with each improvement
+
+**Testing:**
+
+- Use `TestModel` from `pydantic_ai.models.test` for unit tests
+- Mock external API calls, test your logic
+- Coverage target: >85%
+
+## Testing Example
 
 ```python
-from pydantic_ai.testing import TestModel
+from pydantic_ai.models.test import TestModel
+from ai.agents.base_agent import BaseAgent
 
-agent = BaseAgent(model_override=TestModel())
-agent.test_model.set_response({"result": "test"})
+def test_agent():
+    agent = BaseAgent("ai/agents/your_agent.agent.md")
+
+    # Override with TestModel for deterministic testing
+    test_model = TestModel()
+
+    with agent.agent.override(model=test_model):
+        result = agent.query(user_context={"query": "test"})
+
+    # Assert on the structured output
+    assert hasattr(result, "field_name")
 ```
+
+## File Naming
+
+- File extension: `.agent.md`
+- File name: lowercase snake_case (e.g., `maya_memory_keeper.agent.md`)
+- Or simple names (e.g., `patrick.agent.md`)
+
+## Location
+
+All `.agent.md` files live in `ai/agents/` directory.
+
+Shared prompt components go in `ai/agents/shared/` as `.jinja` files.
 
 ## Remember
 
-Agents are AI employees - define their identity clearly and let them excel at their specialized roles.
+Agents are AI employees - define their identity clearly, give them proper tools (output schemas), and let them excel at their specialized roles.
+
+The `.agent.md` file is **declarative configuration**, not implementation code. Optional Python implementation files (for custom logic) can be added separately when needed.

@@ -88,10 +88,14 @@
     }
   },
   "cSpell.words": [
+    "dotenv",
     "frontmatter",
+    "httpx",
     "lifelog",
     "lifelogs",
     "Logfire",
+    "loguru",
+    "openrouter",
     "Pydantic",
     "pytest"
   ]

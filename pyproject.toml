@@ -1,0 +1,129 @@
+# 100x Agent System Configuration
+# Dependencies: requirements/requirements.in
+# CLI: python -m cli.main
+
+[project]
+name = "100x"
+version = "0.1.0"
+description = "AI agent system for amplifying human potential"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { file = "LICENSE" }
+
+[tool.ruff]
+exclude = ["**/migrations", "**/node_modules"]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+# Don't auto-fix unused imports/variables (too aggressive in editor)
+unfixable = ["F401", "F841"]
+
+# Comprehensive rule selection
+select = [
+    "A",    # builtins
+    "ARG",  # unused arguments
+    "B",    # bugbear
+    "DTZ",  # datetimez
+    "E",    # pycodestyle
+    "EXE",  # executable settings
+    "F",    # pyflakes
+    "FURB", # modernize codebase
+    "I",    # Isort
+    "INP",  # implicit namespace packages
+    "ISC",  # string concatenation
+    "N",    # pep8 naming
+    "NPY",  # numpy
+    "PD",   # pandas checking
+    "PERF", # Perflint
+    "PGH",  # explicit noqa
+    "PIE",  # flake8 pie
+    "PLC",  # pylint convention
+    "PLE",  # pylint errors
+    "PLR",  # pylint refactor
+    "PLW",  # pylint warnings
+    "PTH",  # Use path library
+    "RET",  # return statements
+    "RSE",  # raise statements
+    "RUF",  # ruff
+    "S",    # flake8-bandit
+    "SIM",  # flake8 simplify
+    "SLF",  # self
+    "SLOT",
+    "T10",  # debug statements
+    "T20",  # print statements
+    "TRY",  # try/except
+    "UP",   # pyupgrade
+    "W",    # pycodestyle warnings
+    "YTT",  # flake8 2020
+]
+
+# Pragmatic ignores for developer productivity
+extend-ignore = [
+    "ARG002",  # Unused method args like args and kwargs are ok
+    "DTZ003",  # Timezone-naive datetime is ok
+    "DTZ007",  # Timezone-naive datetime is ok
+    "E501",    # Line too long - format to 88 but don't complain about longer
+    "FURB157", # Quotes in Decimal calls are ok
+    "N817",    # D for decimal
+    "PERF401", # Don't force list comprehensions
+    "PLR0911", # Don't complain about too many return statements
+    "PLR0912", # Don't complain about too many branches
+    "PLR0913", # Don't complain about too many arguments
+    "PLR0915", # Don't complain about too many statements
+    "PLR2004", # Don't force every magic value to be a constant
+    "PLW0120", # else without a break is fine
+    "RET505",  # Allow return values set outside if/else
+    "RET506",  # Allow return after raise
+    "RET507",  # Allow return after continue
+    "RET508",  # Allow return after break
+    "RUF001",  # Don't complain about ambiguous text
+    "RUF002",  # Don't complain about × in docstrings
+    "RUF003",  # Don't complain about × symbol
+    "RUF012",  # Don't force annotations of mutable class attributes
+    "RUF013",  # Optional args are ok
+    "RUF010",  # Don't force !s
+    "S101",    # Allow asserts
+    "S102",    # Allow exec (we use it for .agent.md schema loading)
+    "S105",    # Possible hardcoded password
+    "S106",    # Possible hardcoded password
+    "S311",    # Trust us with random
+    "S324",    # Trust us with hashlib
+    "S701",    # Trust us with Jinja2 autoescape (we're rendering prompts)
+    "SIM102",  # Nested ifs are ok
+    "SIM105",  # try/except/pass is fine
+    "SIM108",  # Don't force ternary operators
+    "TRY003",  # Long messages in exceptions are ok
+    "TRY300",  # Allow try/else
+    "TRY301",  # Raise errors how we want
+    "PLC0415", # Allow justified non-top-level imports
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-wrap-aliases = true
+from-first = true
+lines-between-types = 0
+
+[tool.ruff.lint.per-file-ignores]
+"test_*.py" = [
+    "PLR0915", # Tests can be long
+    "ARG001",  # Unused fixtures
+    "SLF001",  # Tests may inspect internals
+    "S603",    # subprocess is fine in tests
+    "S607",    # subprocess with partial path is fine in tests
+]
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+filterwarnings = ["ignore::DeprecationWarning"]
+markers = [
+    "slow: marks tests as slow",
+    "integration: marks tests as integration tests",
+]

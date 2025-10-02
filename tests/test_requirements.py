@@ -1,7 +1,7 @@
 """Test requirements files for common deployment errors."""
 
-import subprocess
 from pathlib import Path
+import subprocess
 
 
 def test_requirements_files_exist():
@@ -25,6 +25,7 @@ def test_requirements_in_compiles():
     with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False) as tmp:
         result = subprocess.run(
             ["uv", "pip", "compile", str(requirements_in), "-o", tmp.name],
+            check=False,
             capture_output=True,
             text=True,
         )
@@ -38,6 +39,7 @@ def test_no_dependency_conflicts():
     # uv pip check verifies no broken dependencies in the current environment
     result = subprocess.run(
         ["uv", "pip", "check"],
+        check=False,
         capture_output=True,
         text=True,
     )

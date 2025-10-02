@@ -2,6 +2,8 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/TechNickAI/100x/build.yml?branch=main&label=build&style=flat-square)](https://github.com/TechNickAI/100x/actions/workflows/build.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/TechNickAI/100x?style=flat-square)](https://app.codecov.io/gh/TechNickAI/100x)
+[![Pydantic](https://img.shields.io/badge/Pydantic-AI-4EA94B?style=flat-square&logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
+[![pytest](https://img.shields.io/badge/pytest-testing-0A9EDC?style=flat-square&logo=pytest)](https://docs.pytest.org/)
 [![Python](https://img.shields.io/badge/python-3.13-blue?style=flat-square)](https://www.python.org/downloads/release/python-3130/)
 [![License](https://img.shields.io/badge/license-Fair%20Use-yellow?style=flat-square)](LICENSE)
 

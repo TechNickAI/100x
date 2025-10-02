@@ -1,67 +1,64 @@
 # Cursor Rules Library
 
-This directory contains a comprehensive library of cursor rules for AI-assisted coding. Projects can symlink or copy the rules they need.
+Reusable cursor rules for AI-assisted coding. Symlink or copy what you need.
 
 ## Organization
 
-Rules are organized into directories by topic:
+Rules organized by topic:
 
-- **Root level** - Universal rules (git, naming, code style, prompt engineering, etc.)
-- **`python/`** - Python-specific standards and patterns
+- **Root level** - Universal (git, naming, code style, prompt engineering, user-facing language)
+- **`python/`** - Python standards and patterns
 - **`django/`** - Django framework conventions
 - **`observability/`** - Logging and error tracking
 - **`ai/`** - AI development patterns
 - **`frontend/`** - Frontend frameworks and tools
 
-Browse the directories to see available rules. Each `.mdc` file is a self-contained rule that can be used independently.
+Each `.mdc` file is self-contained and works independently.
 
-## Application Strategies
+## How Rules Apply
 
-### alwaysApply: true
+### Always Applied
 
-Only the heart-centered AI philosophy rule is always applied.
+Only heart-centered AI philosophy applies to all files.
 
-### alwaysApply: false with globs
+### Auto-Applied by File Pattern
 
-Some rules are auto-applied based on file patterns (globs). Check individual rule files to see their glob patterns. Common patterns include:
+Some rules trigger automatically based on file globs. Check individual `.mdc` files for patterns. Common triggers:
 
 - Django models, commands, and templates
 - Celery tasks
 - React components
-- Other framework-specific files
+- Framework-specific files
 
-### alwaysApply: false
+### Manual Invocation
 
-Most rules - invoked with @ when needed or applied intelligently by Cursor's AI based on the description.
+Most rules get invoked with `@` when you need them, or Cursor applies them intelligently based on context.
 
-## Usage Patterns
+## Usage
 
-First, set a variable for convenience (adjust path to where you cloned this repo):
+Set a variable for convenience:
 
 ```bash
-AI_CONFIG=~/src/ai-coding-config  # or wherever you cloned it
+AI_CONFIG=~/src/ai-coding-config  # adjust to your clone path
 ```
 
-### Pattern 1: Symlink Everything (Easiest)
+### Symlink Everything (Easiest)
 
 ```bash
-# From your project directory
 ln -s $AI_CONFIG/.cursor .cursor
 ```
 
-### Pattern 2: Cherry-Pick Directories
+### Cherry-Pick Directories
 
 ```bash
-# From your project directory
 mkdir -p .cursor/rules
 ln -s $AI_CONFIG/.cursor/rules/python .cursor/rules/python
 ln -s $AI_CONFIG/.cursor/rules/django .cursor/rules/django
 ```
 
-### Pattern 3: Copy What You Need
+### Copy What You Need
 
 ```bash
-# From your project directory
 mkdir -p .cursor/rules
 cp $AI_CONFIG/.cursor/rules/*.mdc .cursor/rules/
 cp -r $AI_CONFIG/.cursor/rules/python .cursor/rules/
@@ -69,29 +66,31 @@ cp -r $AI_CONFIG/.cursor/rules/python .cursor/rules/
 
 ## Manual Invocation
 
-All rules can be manually invoked using `@` followed by the rule name (without the `.mdc` extension):
+Invoke any rule with `@` + rule name (without `.mdc`):
 
-- Example: `@git-commit-message`
-- Example: `@python-coding-standards`
-- Example: `@django-models`
+- `@git-commit-message`
+- `@python-coding-standards`
+- `@django-models`
+- `@user-facing-language`
 
-Type `@` in Cursor and browse available rules, or check the directory structure to see what's available.
+Type `@` in Cursor to browse available rules.
 
 ## Customization
 
-Projects can:
+**Use as-is** - Symlink and use rules unchanged
 
-1. Use rules as-is
-2. Override specific rules by creating same-named files locally
-3. Add project-specific rules alongside these
-4. Modify glob patterns in frontmatter as needed
+**Override** - Create same-named files locally to override specific rules
+
+**Extend** - Add project-specific rules alongside these
+
+**Modify** - Adjust glob patterns in frontmatter as needed
 
 ## Philosophy
 
-These rules embody:
+These rules enforce:
 
 - Heart-centered AI collaboration
-- Clear, thoughtful coding standards
+- Clear coding standards
 - Thoughtful testing and error handling
 - Modern Python and framework best practices
 - Universal patterns that work across projects

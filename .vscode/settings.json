@@ -85,5 +85,12 @@
       "source.organizeImports": "explicit"
     }
   },
-  "cSpell.words": ["frontmatter", "lifelog", "lifelogs", "Logfire", "pytest"]
+  "cSpell.words": [
+    "frontmatter",
+    "lifelog",
+    "lifelogs",
+    "Logfire",
+    "Pydantic",
+    "pytest"
+  ]
 }

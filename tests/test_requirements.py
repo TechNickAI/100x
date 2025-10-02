@@ -41,7 +41,7 @@ def test_no_dependency_conflicts():
         capture_output=True,
         text=True,
     )
-    
+
     assert result.returncode == 0, f"Dependency conflicts found: {result.stdout}"
 
 

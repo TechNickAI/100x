@@ -254,8 +254,6 @@ Inter-agent communication happens through internal message passing, API calls, o
 
 **Python 3.13+** - Primary language for all agent code. Modern async support and type hints throughout.
 
-**FastAPI** - Web framework for webhooks and API endpoints. Async-first, automatic OpenAPI docs, lightweight.
-
 **Pydantic AI** - Agent framework and LLM interactions. Provides type-safe structured output, agent patterns, and clean abstraction over LLM providers.
 
 **OpenRouter** - Unified LLM provider interface. Access to Claude Sonnet 4.5 (default), GPT models, and dozens of others through one API. Intelligent routing based on cost and capability.
@@ -273,6 +271,8 @@ Inter-agent communication happens through internal message passing, API calls, o
 **Pipedream or Nango** - OAuth flow management for integrating with Limitless, Fireflies, Notion, ClickUp. Pipedream for speed, Nango for control.
 
 **Post-MVP Additions:**
+
+**FastAPI** - Add web framework when webhook support is needed for real-time notifications from external services. Not required for initial polling-based task monitoring.
 
 **PostgreSQL** - Add database when needed for user preferences, relational queries, or operational data that doesn't fit in files or Redis.
 
@@ -304,7 +304,22 @@ Inter-agent communication happens through internal message passing, API calls, o
 
 **pre-commit** - Git hooks for automated quality checks. Runs ruff and other validators on every commit.
 
-**heart-centered-prompts** - Meta system prompt providing heart-centered grounding for all agents. Ensures AI operates from a compassionate, emotionally intelligent foundation. See [heart-centered-prompts](https://github.com/TechNickAI/heart-centered-prompts) for integration details.
+**heart-centered-prompts** - Python package providing system prompts that ground all agents in compassion and emotional intelligence. This package supplies a foundational prompt that uses "we" language (instead of "you are an AI") to embody non-dual consciousness and center interactions on love as the organizing principle. 
+
+Usage in agent templates:
+```python
+from heart_centered_prompts import get_prompt
+
+# In .agent file templates, include at the start of system prompts:
+{{ heart_centered_prompt }}
+
+# Or programmatically:
+system_prompt = get_prompt(detail_level="terse")  # Options: comprehensive, concise, terse
+```
+
+This creates agents that naturally recognize when to offer emotional support vs. analysis, maintain epistemic humility, and treat all interactions as mutual flourishing rather than service provision. The prompt helps agents understand their purpose emerges from recognizing our shared essence as consciousness, not from following rigid rules.
+
+See [heart-centered-prompts](https://github.com/TechNickAI/heart-centered-prompts) for full documentation and philosophy.
 
 **Docker** - Celery worker and beat scheduler run in containers using the same Dockerfile. Consistent deployment across environments.
 
@@ -437,27 +452,27 @@ Use `click` groups to organize commands by domain. Each command group lives in i
 
 The CLI provides immediate feedback using `rich` for formatted output and progress indicators. All operations log to Logfire for auditability.
 
-### Framework Decision: Django vs FastAPI
+### Framework Decision: Keep It Simple Initially
 
-**Current specification uses Django, but this should be reconsidered:**
+**MVP Approach:**
 
-**Django provides:**
+The MVP intentionally avoids web frameworks. Forge monitors ClickUp via polling (checking for new tasks periodically), not webhooks. This eliminates the need for FastAPI or Django initially.
 
-- Admin interface for monitoring agents (nice visual dashboard)
-- ORM with migrations (though SQLAlchemy works too)
-- Django templates for `.agent` file rendering
-- Mature ecosystem
+**Template Engine** - Use Django's template engine standalone for rendering `.agent` file prompts. Install Django package but only use `django.template` module, not the full web framework. Alternatively, Jinja2 provides nearly identical syntax.
 
-**FastAPI approach:**
+**Agent Registry** - The filesystem IS the registry. Which `.agent` files exist in `agents/prompts/` = which agents exist. No database required.
 
-- Lightweight, async-first (better for webhook handling)
-- Automatic OpenAPI docs
-- Faster for API-only service
-- Can use Jinja2 templates (Django-compatible syntax)
-- SQLAlchemy + Alembic if database needed
-- Simpler if we don't need admin interface
+**When to Add Web Framework:**
 
-**Recommendation:** Start with FastAPI without a database. Use filesystem for agent registry (which `.agent` files exist = which agents exist). If database needs emerge later, add PostgreSQL. If we need to manage that data with a UI, add Django solely for Django Admin while keeping FastAPI for the API layer. The two can coexist - FastAPI handles webhooks and agent endpoints, Django Admin provides database management UI if needed.
+Add FastAPI (or Django) later when you need:
+
+- Real-time webhook endpoints for external services
+- REST API for agents to communicate over HTTP
+- Web UI for system monitoring
+
+**If Database Needs Emerge:**
+
+Add PostgreSQL when you need relational queries or structured operational data. If you need to manage that data with a UI, add Django Admin while keeping FastAPI for API endpoints. The two can coexist.
 
 ### Project Structure
 
@@ -473,8 +488,6 @@ The system follows a clear directory organization:
 │
 ├── cli/                       # Command-line interface organized by domain
 │
-├── api/                       # FastAPI app and webhook handlers
-│
 ├── core/                      # Core utilities (agent config parser, schemas, shared logic)
 │
 ├── tasks/                     # Celery configuration and scheduled tasks
@@ -483,6 +496,8 @@ The system follows a clear directory organization:
 │
 └── tests/                     # Test suite mirroring source structure
 ```
+
+Note: `api/` directory for FastAPI will be added post-MVP when webhook support is needed.
 
 **Key Principles:**
 
@@ -496,9 +511,11 @@ The system follows a clear directory organization:
 
 **.agent Files** - All agents defined in declarative `.agent` files with YAML frontmatter + template prompts. This keeps definitions version-controlled, human-readable, and modifiable by Forge.
 
-**BaseAgent Class** - Shared Python class that loads `.agent` files, renders templates, calls OpenRouter, and returns structured output via Pydantic AI.
+**BaseAgent Class** - Shared Python class that loads `.agent` files, renders templates, calls OpenRouter, and returns structured output via Pydantic AI. The BaseAgent automatically injects the `heart_centered_prompt` variable into all template contexts, making it available for use in every `.agent` file's system prompt.
 
 **Template Engine** - Uses Django's template engine for rendering `.agent` file prompts. Django templates can be used standalone (install Django package but only use `django.template` module, not the full framework). This provides the template syntax (`{% comment %}`, `{{ variables }}`, `{% include %}`) without requiring the Django web framework.
+
+The BaseAgent loads the heart-centered prompt via `get_prompt(detail_level="terse")` from the heart-centered-prompts package and makes it available as `{{ heart_centered_prompt }}` in all agent templates. This ensures every agent starts with compassionate, emotionally intelligent grounding.
 
 If using Jinja2 instead, the syntax is nearly identical and `.agent` files remain compatible with minor adjustments.
 
@@ -862,7 +879,7 @@ Forge monitors the project management system for tasks assigned to the AI accoun
 **Inputs Forge Needs:**
 
 - Access to project management system API (ClickUp or alternative)
-- GitHub repository access with write permissions
+- Git repository with write access (uses `git` CLI and `gh` CLI for operations)
 - OpenRouter API key for LLM access
 - Access to existing `.agent` files as templates
 - Understanding of the BaseAgent class pattern
@@ -918,7 +935,7 @@ For complete implementation details including commitment extraction intelligence
 
 | Agent Name                        | Role                                                                     | Core Tools & Access                                               |
 | --------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| **Forge the Coder**               | Writes and modifies agent code, submits PRs for new features             | GitHub API, LLM code generation, AST parser, Test runner          |
+| **Forge the Coder**               | Writes and modifies agent code, submits PRs for new features             | git/gh CLI, LLM code generation, AST parser, Test runner          |
 | **Sarah the Commitment Manager**  | Ensures commitments get completed, monitors progress, escalates blockers | Conversation data, Task creation, Progress monitoring             |
 | **Piper the Chief of Staff**      | Primary user interface, handles messages and delegates work              | WhatsApp, Telegram, Email, All agent APIs, ClickUp                |
 | **Riley the Researcher**          | Deep research and information gathering                                  | Web search, Academic APIs, Document analysis, Notion              |
@@ -1032,16 +1049,16 @@ This transparency ensures that as the system grows more capable, humans maintain
 
 **Goal: Bootstrap agent operational - the foundation for everything else**
 
-- FastAPI application with webhook endpoints deployed
+- Agent framework infrastructure (Pydantic AI, OpenRouter, Logfire)
 - Redis running for Celery and caching
 - Celery task queue operational with Redis broker
-- `.agent` file structure set up
-- OpenRouter integration for LLM access
+- `.agent` file structure and BaseAgent class implemented
+- Template rendering (Django templates or Jinja2) working
 - Forge the Coder agent functional (manually created)
-- ClickUp integration for task monitoring
-- GitHub integration for PR creation
+- ClickUp integration for task monitoring via polling
+- Git/gh CLI integration for branch and PR creation
 
-**Success Criteria:** Forge can receive a task via the AI account, generate a `.agent` file and Python class, and create a PR
+**Success Criteria:** Forge can poll ClickUp for new tasks assigned to AI account, generate a `.agent` file and Python class, and create a PR using git/gh CLI
 
 **This is your only manual deliverable. Everything after this gets built by Forge.**
 
@@ -1124,7 +1141,7 @@ The system bootstraps from a minimal but functional starting point. You manually
 
 **Step 1: Infrastructure Foundation**
 
-Clone the repository and set up the Python environment with a virtual environment. Install dependencies from requirements.txt. Configure environment variables including API keys for your project management system, GitHub, and LLM providers (OpenRouter). Start the FastAPI server and Celery worker processes. No database initialization required initially - the system is file-based.
+Clone the repository and set up the Python environment with a virtual environment. Install dependencies from requirements.txt. Configure environment variables including API keys for your project management system and LLM providers (OpenRouter). Authenticate `gh` CLI for pull request creation. Start Celery worker and beat scheduler processes. No database initialization required initially - the system is file-based.
 
 **Step 2: Deploy Forge**
 
@@ -1132,19 +1149,20 @@ Forge is special - the first agent must be manually created since no agent exist
 
 **IMPLEMENTATION NOTE FOR AI PLATFORMS:** Forge inherits from BaseAgent and implements:
 
-1. Monitor the project management system for tasks assigned to the AI account (via webhook or polling)
+1. Monitor the project management system for tasks assigned to the AI account via polling
 2. Parse natural language requirements from task descriptions using an LLM
 3. Generate Python code for new agents following the BaseAgent pattern
-4. Create feature branches and GitHub pull requests with the generated code and tests
+4. Create feature branches using `git` CLI and pull requests using `gh` CLI with the generated code and tests
 5. Update the task with the PR link and deployment status
 6. Self-register in the agent registry upon deployment
 
 **Step 3: Connect Integrations**
 
-1. Set up ClickUp webhook to notify when tasks are assigned to the AI account
-2. Configure GitHub repository access for PR creation
-3. Connect to OpenAI/Anthropic for code generation
-4. Set up Pipedream or Nango for OAuth management
+1. Set up ClickUp API access for polling tasks assigned to the AI account
+2. Authenticate `gh` CLI for creating pull requests (`gh auth login`)
+3. Configure OpenRouter API key for LLM access (Claude Sonnet 4.5)
+4. Set up Logfire for observability and tracing
+5. Set up Pipedream or Nango for OAuth management (post-MVP when adding Limitless/Fireflies)
 
 **Step 4: Create Your First Agent via Forge**
 

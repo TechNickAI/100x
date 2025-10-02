@@ -80,33 +80,33 @@ graph LR
 
 This table shows actual implementation status versus planned functionality:
 
-| Phase                              | Component                    | Status         | Description                                   |
-| ---------------------------------- | ---------------------------- | -------------- | --------------------------------------------- |
-| **Phase 0: Bootstrap**             |                              |                |                                               |
-|                                    | Repository Setup             | ✅ Complete    | Tooling, AI rules, pre-commit hooks, CI/CD    |
-|                                    | Core Infrastructure          | ⬜ Not Started | FastAPI, Redis, Celery setup                  |
-|                                    | BaseAgent Framework          | ⬜ Not Started | Agent definition and execution framework      |
-|                                    | Forge the Coder              | ⬜ Not Started | The bootstrap agent that creates all others   |
-|                                    | GitHub Integration           | ⬜ Not Started | PR creation and code management               |
-|                                    | ClickUp Integration          | ⬜ Not Started | Task monitoring and updates                   |
-| **Phase 1: Knowledge Layer**       |                              |                |                                               |
-|                                    | Maya the Memory Keeper       | ⬜ Not Started | Knowledge base maintenance from conversations |
-|                                    | Limitless Integration        | ⬜ Not Started | Personal conversation processing              |
-|                                    | Fireflies Integration        | ⬜ Not Started | Meeting transcript analysis                   |
-|                                    | Notion Provider              | ⬜ Not Started | Knowledge base storage and retrieval          |
-|                                    | Winston the Wolf             | ⬜ Not Started | Privacy protection and data cleanup           |
-| **Phase 2: Commitment Management** |                              |                |                                               |
-|                                    | Sarah the Commitment Manager | ⬜ Not Started | Commitment extraction and tracking            |
-|                                    | Task Creation Logic          | ⬜ Not Started | Smart routing and assignment                  |
-|                                    | Progress Monitoring          | ⬜ Not Started | Active tracking and escalation                |
-| **Phase 3: Orchestration**         |                              |                |                                               |
-|                                    | Piper the Chief of Staff     | ⬜ Not Started | User interface and agent coordinator          |
-|                                    | Agent Registry               | ⬜ Not Started | Discovery and capability matching             |
-|                                    | Inter-Agent Communication    | ⬜ Not Started | Internal delegation patterns                  |
-| **Phase 4: Self-Evolution**        |                              |                |                                               |
-|                                    | Self-Improvement Logic       | ⬜ Not Started | Agents requesting enhancements                |
-|                                    | Capability Creation          | ⬜ Not Started | Dynamic capability generation                 |
-|                                    | Evolution Tracking           | ⬜ Not Started | Version history and audit trail               |
+| Phase                              | Component                    | Status         | Description                                     |
+| ---------------------------------- | ---------------------------- | -------------- | ----------------------------------------------- |
+| **Phase 0: Bootstrap**             |                              |                |                                                 |
+|                                    | Repository Setup             | ✅ Complete    | Tooling, AI rules, pre-commit hooks, CI/CD      |
+|                                    | Core Infrastructure          | ⬜ Not Started | Pydantic AI, OpenRouter, Logfire, Redis, Celery |
+|                                    | BaseAgent Framework          | ⬜ Not Started | Agent definition and execution framework        |
+|                                    | Forge the Coder              | ⬜ Not Started | The bootstrap agent that creates all others     |
+|                                    | Git/gh CLI Integration       | ⬜ Not Started | Branch and PR creation via CLI tools            |
+|                                    | ClickUp Integration          | ⬜ Not Started | Task monitoring via polling                     |
+| **Phase 1: Knowledge Layer**       |                              |                |                                                 |
+|                                    | Maya the Memory Keeper       | ⬜ Not Started | Knowledge base maintenance from conversations   |
+|                                    | Limitless Integration        | ⬜ Not Started | Personal conversation processing                |
+|                                    | Fireflies Integration        | ⬜ Not Started | Meeting transcript analysis                     |
+|                                    | Notion Provider              | ⬜ Not Started | Knowledge base storage and retrieval            |
+|                                    | Winston the Wolf             | ⬜ Not Started | Privacy protection and data cleanup             |
+| **Phase 2: Commitment Management** |                              |                |                                                 |
+|                                    | Sarah the Commitment Manager | ⬜ Not Started | Commitment extraction and tracking              |
+|                                    | Task Creation Logic          | ⬜ Not Started | Smart routing and assignment                    |
+|                                    | Progress Monitoring          | ⬜ Not Started | Active tracking and escalation                  |
+| **Phase 3: Orchestration**         |                              |                |                                                 |
+|                                    | Piper the Chief of Staff     | ⬜ Not Started | User interface and agent coordinator            |
+|                                    | Agent Registry               | ⬜ Not Started | Discovery and capability matching               |
+|                                    | Inter-Agent Communication    | ⬜ Not Started | Internal delegation patterns                    |
+| **Phase 4: Self-Evolution**        |                              |                |                                                 |
+|                                    | Self-Improvement Logic       | ⬜ Not Started | Agents requesting enhancements                  |
+|                                    | Capability Creation          | ⬜ Not Started | Dynamic capability generation                   |
+|                                    | Evolution Tracking           | ⬜ Not Started | Version history and audit trail                 |
 
 Legend: ✅ Complete | 🚧 In Progress | ⬜ Not Started
 
@@ -115,13 +115,15 @@ Legend: ✅ Complete | 🚧 In Progress | ⬜ Not Started
 Built with modern, proven technologies:
 
 - **Python 3.13+** with async support and type hints
-- **FastAPI** for webhook handling and APIs
-- **Pydantic AI** for structured agent outputs
+- **Pydantic AI** for structured agent outputs and LLM interactions
 - **OpenRouter** for unified LLM access (Claude Sonnet 4.5 default)
 - **Celery + Redis** for task queue and caching
 - **Logfire** for comprehensive observability
 - **Click + Rich** for beautiful CLI tools
+- **Git + gh CLI** for version control and pull request creation
 - **Docker** for consistent deployment
+
+**Post-MVP additions:** FastAPI (webhooks), PostgreSQL (database), Django Admin (UI)
 
 ## 🎯 How It Works
 
@@ -187,7 +189,7 @@ These principles emerged from real implementation challenges:
 - **Agent-first design** - Autonomous agents that communicate and evolve, not predetermined workflows
 - **Data-first architecture** - Store everything raw, let multiple agents extract different insights
 - **Human oversight** - All agent creation flows through pull requests for review
-- **Heart-centered AI** - Agents operate from compassion and emotional intelligence
+- **Heart-centered AI** - All agents use [heart-centered-prompts](https://github.com/TechNickAI/heart-centered-prompts) to operate from compassion, recognize when to offer emotional support vs. analysis, and treat interactions as mutual flourishing
 
 ## 🤝 Contributing
 

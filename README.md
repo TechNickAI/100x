@@ -37,7 +37,7 @@ Your AI team handles the cognitive load while you focus on decisions and creativ
 
 ## 📖 README-Driven Development
 
-**Important:** This project follows README-driven development. We're documenting the complete vision and architecture before full implementation. Not all described functionality exists yet—see the [Progress Table](#-current-progress) below for what's actually built.
+**Important:** We're documenting the complete vision before full implementation. Not all described functionality exists yet—see the [Progress Table](#-current-progress) below for what's actually built.
 
 ## 🔄 The 100x Framework
 
@@ -64,43 +64,27 @@ Building an AI team where before there was only you. Specialized agents handle c
 
 Having an AI execution partner that turns visions into reality. Whether launching ventures, coordinating social impact, or validating research—the AI handles analysis, development, and deployment. **Go from idea to working prototype in days, not months.**
 
-## 🔨 The Core Insight: Interaction Before Self-Building
+## 🔨 The Core Insight: Self-Building AI Workforce
 
-The system needs two layers to be genuinely useful:
+This isn't just AI automation—it's an AI workforce that builds itself.
 
-### Layer 1: Interaction (Build First)
-
-**Piper the Chief of Staff** - Your interface to the AI team through ClickUp:
+**How it works from your perspective:**
 
 ```mermaid
 graph LR
-    A[You: Create Task in ClickUp] --> B[Piper Claims Task]
+    A[You: Create Task] --> B[AI Claims It]
     B --> C[Shows Progress]
-    C --> D[Completes Work]
-    D --> E[Updates Task with Results]
+    C --> D[Delivers Results]
+    D --> E[Or Creates New Agents if Needed]
+    E -.New capabilities.-> A
     style A fill:#e1f5ff
     style C fill:#fff3cd
-    style E fill:#d4f1d4
+    style D fill:#d4f1d4
 ```
 
-### Layer 2: Self-Building (Build Second)
+You interact through your existing project management tool (ClickUp, Asana, Linear). Create a task, assign it to your AI team, and watch it get done. When your AI team encounters something it can't do yet, it creates a new agent to handle it—then gets you to review the code before deploying.
 
-**Forge the Coder** - Receives agent requests through Piper:
-
-```mermaid
-graph LR
-    A[You: Create Task via ClickUp] --> B[Piper Routes to Forge]
-    B --> C[Forge Generates Agent]
-    C --> D[Pull Request]
-    D --> E[You Review & Merge]
-    E --> F[New Agent Joins Workforce]
-    F -.Can create more agents.-> A
-    style A fill:#e1f5ff
-    style C fill:#fff3cd
-    style F fill:#d4f1d4
-```
-
-**Why this order?** Forge without the interaction layer is just a command-line tool you'd use from Cursor. With Piper first, Forge becomes part of a system that anyone can use, that shows its work, and that can improve itself through the same interface.
+**The magic:** Every agent can recognize its limitations and request new capabilities. Your AI workforce evolves with your needs instead of staying frozen in time.
 
 ## 📊 Current Progress
 
@@ -175,38 +159,16 @@ graph TB
 - Project management (ClickUp/Asana/Linear)
 - Knowledge bases (Notion/Obsidian/Confluence)
 
-## 🚀 The Path Forward
+## 🚀 Your Path Forward
 
-### Immediate Next Steps (Phase 1)
+### Start Using It
 
-**Build the interaction layer first** - agents need a way to communicate and show progress before self-building capabilities matter:
+1. **Connect your tools** - Link your project management system (ClickUp/Asana/Linear)
+2. **Create your first task** - Assign something to your AI team
+3. **Watch it work** - See progress updates and results in real-time
+4. **Request new capabilities** - Need something it can't do? Just ask and review the PR
 
-1. **ClickUp Provider** - Poll for tasks, update status, post comments
-2. **Piper (Basic)** - Acknowledges tasks assigned to "AI", shows what it's working on
-3. **Agent Registry** - Simple lookup so agents can find and call each other
-
-This creates the **feedback loop** - you assign a task, see the agent claim it, watch progress updates, and get results.
-
-### Then Forge Makes Sense (Phase 2)
-
-Once the interaction layer works, **Forge the Coder** becomes genuinely useful:
-
-1. Create a task via ClickUp: "Build Maya the Memory Keeper agent"
-2. Forge sees the task, shows progress, generates code
-3. PR gets created with full context from the task
-4. You review and merge
-5. Maya joins your workforce and can receive tasks the same way
-
-### Why This Order?
-
-Forge without ClickUp integration is just a worse version of Cursor - you'd still be on the command line. With the interaction layer first:
-
-- ✅ Agents become immediately useful and visible
-- ✅ Other people can use the system through ClickUp
-- ✅ Agents can request improvements that flow back through the system
-- ✅ You can see what's happening in real-time
-
-### 🌱 Long-Term Vision
+### Watch It Grow
 
 Your AI workforce evolves with you:
 
@@ -233,7 +195,7 @@ These principles emerged from real implementation challenges:
 
 ## 🤝 Contributing
 
-This is an open-source foundation for autonomous AI systems. We welcome contributions that align with the vision of self-evolving, human-amplifying AI.
+We welcome contributions that align with the vision of self-evolving, human-amplifying AI. See the [context/](context/) folder for detailed architecture and implementation guides.
 
 ## 📝 License
 

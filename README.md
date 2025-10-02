@@ -1,5 +1,10 @@
 # 100x Your Life with an AI Team
 
+[![Build Status](https://img.shields.io/github/actions/workflow/status/TechNickAI/100x/build.yml?branch=main&label=build&style=flat-square)](https://github.com/TechNickAI/100x/actions/workflows/build.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/TechNickAI/100x?style=flat-square)](https://app.codecov.io/gh/TechNickAI/100x)
+[![Python](https://img.shields.io/badge/python-3.13-blue?style=flat-square)](https://www.python.org/downloads/release/python-3130/)
+[![License](https://img.shields.io/badge/license-Fair%20Use-yellow?style=flat-square)](LICENSE)
+
 <img alt="100x Logo" src="./logo.png" style="width:25%" align="right"/>
 
 **Reclaim your presence. Build an AI team. Move at the speed of creativity.**
@@ -116,7 +121,7 @@ Built with modern, proven technologies:
 
 - **Python 3.13+** with async support and type hints
 - **Pydantic AI** for structured agent outputs and LLM interactions
-- **OpenRouter** for unified LLM access (Claude Sonnet 4.5 default)
+- **OpenRouter** for unified LLM access (see ai/core/openrouter.py for models)
 - **Celery + Redis** for task queue and caching
 - **Logfire** for comprehensive observability
 - **Click + Rich** for beautiful CLI tools

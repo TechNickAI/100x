@@ -64,29 +64,43 @@ Building an AI team where before there was only you. Specialized agents handle c
 
 Having an AI execution partner that turns visions into reality. Whether launching ventures, coordinating social impact, or validating research—the AI handles analysis, development, and deployment. **Go from idea to working prototype in days, not months.**
 
-## 🔨 The Core Insight: Forge the Coder
+## 🔨 The Core Insight: Interaction Before Self-Building
 
-Everything starts with one agent: **Forge the Coder**.
+The system needs two layers to be genuinely useful:
 
-You build Forge manually. Then Forge builds everything else.
+### Layer 1: Interaction (Build First)
 
-1. You build Forge once (the only agent you create by hand)
-2. Forge builds all other agents from natural language descriptions
-3. Agents recognize their limitations and request improvements
-4. Your workforce evolves to meet emerging needs
-
-The workflow:
+**Piper the Chief of Staff** - Your interface to the AI team through ClickUp:
 
 ```mermaid
 graph LR
-    A[You: Create Task] --> B[Forge Generates Agent]
-    B --> C[Pull Request]
-    C --> D[You Review & Merge]
-    D --> E[New Agent Joins Workforce]
-    E -.Agent can create more agents.-> A
+    A[You: Create Task in ClickUp] --> B[Piper Claims Task]
+    B --> C[Shows Progress]
+    C --> D[Completes Work]
+    D --> E[Updates Task with Results]
     style A fill:#e1f5ff
+    style C fill:#fff3cd
     style E fill:#d4f1d4
 ```
+
+### Layer 2: Self-Building (Build Second)
+
+**Forge the Coder** - Receives agent requests through Piper:
+
+```mermaid
+graph LR
+    A[You: Create Task via ClickUp] --> B[Piper Routes to Forge]
+    B --> C[Forge Generates Agent]
+    C --> D[Pull Request]
+    D --> E[You Review & Merge]
+    E --> F[New Agent Joins Workforce]
+    F -.Can create more agents.-> A
+    style A fill:#e1f5ff
+    style C fill:#fff3cd
+    style F fill:#d4f1d4
+```
+
+**Why this order?** Forge without the interaction layer is just a command-line tool you'd use from Cursor. With Piper first, Forge becomes part of a system that anyone can use, that shows its work, and that can improve itself through the same interface.
 
 ## 📊 Current Progress
 
@@ -94,33 +108,30 @@ This table shows actual implementation status versus planned functionality:
 
 | Phase                              | Component                    | Status         | Description                                   |
 | ---------------------------------- | ---------------------------- | -------------- | --------------------------------------------- |
-| **Phase 0: Bootstrap**             |                              |                |                                               |
+| **Phase 0: Foundation**            |                              |                |                                               |
 |                                    | Repository Setup             | ✅ Complete    | Tooling, AI rules, pre-commit hooks, CI/CD    |
 |                                    | Agent Infrastructure         | ✅ Complete    | Pydantic AI, OpenRouter, Logfire, Jinja2      |
 |                                    | BaseAgent Framework          | ✅ Complete    | .agent.md files, parser, execution            |
 |                                    | Agent Validation             | ✅ Complete    | Full validator with pre-commit hook           |
 |                                    | CLI Interface                | ✅ Complete    | Beautiful Click+Rich commands                 |
-|                                    | Forge the Coder              | ⬜ Next        | The bootstrap agent that creates all others   |
-|                                    | Git/gh CLI Integration       | ⬜ Next        | Branch and PR creation via CLI tools          |
-|                                    | ClickUp Integration          | ⬜ Future      | Task monitoring via polling                   |
-| **Phase 1: Knowledge Layer**       |                              |                |                                               |
+| **Phase 1: Interaction Layer**     |                              |                |                                               |
+|                                    | ClickUp Provider             | ⬜ Next        | Task monitoring, status updates, comments     |
+|                                    | Piper the Chief of Staff     | ⬜ Next        | Receives tasks, shows progress, coordinates   |
+|                                    | Agent Registry               | ⬜ Next        | Simple discovery and capability matching      |
+| **Phase 2: Self-Building System**  |                              |                |                                               |
+|                                    | Forge the Coder              | ⬜ Future      | Creates agents from ClickUp task descriptions |
+|                                    | Git/gh CLI Integration       | ⬜ Future      | Branch and PR creation via CLI tools          |
+|                                    | Self-Improvement Logic       | ⬜ Future      | Agents requesting enhancements                |
+| **Phase 3: Knowledge Layer**       |                              |                |                                               |
 |                                    | Maya the Memory Keeper       | ⬜ Not Started | Knowledge base maintenance from conversations |
 |                                    | Limitless Integration        | ⬜ Not Started | Personal conversation processing              |
 |                                    | Fireflies Integration        | ⬜ Not Started | Meeting transcript analysis                   |
 |                                    | Notion Provider              | ⬜ Not Started | Knowledge base storage and retrieval          |
 |                                    | Winston the Wolf             | ⬜ Not Started | Privacy protection and data cleanup           |
-| **Phase 2: Commitment Management** |                              |                |                                               |
+| **Phase 4: Commitment Management** |                              |                |                                               |
 |                                    | Sarah the Commitment Manager | ⬜ Not Started | Commitment extraction and tracking            |
 |                                    | Task Creation Logic          | ⬜ Not Started | Smart routing and assignment                  |
 |                                    | Progress Monitoring          | ⬜ Not Started | Active tracking and escalation                |
-| **Phase 3: Orchestration**         |                              |                |                                               |
-|                                    | Piper the Chief of Staff     | ⬜ Not Started | User interface and agent coordinator          |
-|                                    | Agent Registry               | ⬜ Not Started | Discovery and capability matching             |
-|                                    | Inter-Agent Communication    | ⬜ Not Started | Internal delegation patterns                  |
-| **Phase 4: Self-Evolution**        |                              |                |                                               |
-|                                    | Self-Improvement Logic       | ⬜ Not Started | Agents requesting enhancements                |
-|                                    | Capability Creation          | ⬜ Not Started | Dynamic capability generation                 |
-|                                    | Evolution Tracking           | ⬜ Not Started | Version history and audit trail               |
 
 Legend: ✅ Complete | 🚧 In Progress | ⬜ Not Started
 
@@ -166,19 +177,34 @@ graph TB
 
 ## 🚀 The Path Forward
 
-### Immediate Next Step
+### Immediate Next Steps (Phase 1)
 
-Build Forge the Coder—the only agent you'll build manually. Everything else gets built by Forge through natural language task descriptions.
+**Build the interaction layer first** - agents need a way to communicate and show progress before self-building capabilities matter:
 
-### Then What?
+1. **ClickUp Provider** - Poll for tasks, update status, post comments
+2. **Piper (Basic)** - Acknowledges tasks assigned to "AI", shows what it's working on
+3. **Agent Registry** - Simple lookup so agents can find and call each other
 
-Once Forge works:
+This creates the **feedback loop** - you assign a task, see the agent claim it, watch progress updates, and get results.
 
-1. Create a task: "Build Maya the Memory Keeper agent"
-2. Forge generates the code
-3. Review the PR
-4. Maya joins your workforce
-5. Repeat for each needed capability
+### Then Forge Makes Sense (Phase 2)
+
+Once the interaction layer works, **Forge the Coder** becomes genuinely useful:
+
+1. Create a task via ClickUp: "Build Maya the Memory Keeper agent"
+2. Forge sees the task, shows progress, generates code
+3. PR gets created with full context from the task
+4. You review and merge
+5. Maya joins your workforce and can receive tasks the same way
+
+### Why This Order?
+
+Forge without ClickUp integration is just a worse version of Cursor - you'd still be on the command line. With the interaction layer first:
+
+- ✅ Agents become immediately useful and visible
+- ✅ Other people can use the system through ClickUp
+- ✅ Agents can request improvements that flow back through the system
+- ✅ You can see what's happening in real-time
 
 ### 🌱 Long-Term Vision
 

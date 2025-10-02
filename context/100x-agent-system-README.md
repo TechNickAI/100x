@@ -73,9 +73,22 @@ The system improves itself. When an agent fails to complete a task or recognizes
 
 If you're an AI coding assistant implementing this system, read this carefully:
 
-**Your first and only manual deliverable is Forge the Coder.**
+**The practical implementation path differs from the philosophical ideal.**
 
-Do not build Maya, Sarah, Winston, or any other agent by hand. Do not try to implement the full system in one go. Build Forge first. Once Forge works, you use Forge to build everything else by creating tasks in natural language.
+Philosophically, Forge the Coder is the crown jewel - an agent that creates other agents. But pragmatically, Forge without an interaction layer is just a command-line tool that's worse than Cursor.
+
+**Build the interaction layer first:**
+
+1. **ClickUp Provider** - Task monitoring, status updates, comments
+2. **Piper the Chief of Staff** - Minimal coordinator that claims tasks and shows progress
+3. **Agent Registry** - Simple discovery mechanism
+
+This creates visibility and usability. Then Forge becomes genuinely valuable because it can:
+
+- Receive requests through ClickUp (accessible to anyone)
+- Show its progress as it works
+- Create PRs with full context from the task
+- Enable agents to request improvements through the same system
 
 **User Interaction for MVP:** The system has two interfaces for MVP:
 
@@ -84,7 +97,7 @@ Do not build Maya, Sarah, Winston, or any other agent by hand. Do not try to imp
 
 Additional interfaces (WhatsApp, Telegram, web chat) will be added in later phases.
 
-See [Phase 0: Forge the Coder](#phase-0-forge-the-coder-first-deliverable) for detailed requirements and [CLI Interface](#cli-interface) for command-line capabilities.
+See [Implementation Milestones](#implementation-milestones) for the revised build order and [CLI Interface](#cli-interface) for command-line capabilities.
 
 ### Platform Flexibility
 
@@ -851,13 +864,57 @@ Agents that are no longer needed get removed. Delete the `.agent` file, remove t
 
 ---
 
-## Phase 0: Forge the Coder (First Deliverable)
+## Phase 0: The Interaction Layer (Actual First Deliverable)
 
-### The Bootstrap Agent
+### Why Interaction Before Self-Building
 
-Forge the Coder is the single most important piece of the entire system. Without Forge, you're writing all agents manually. With Forge, you describe what you need in English and Forge creates it. Everything else in this architecture flows from getting Forge working.
+The original architecture called for building Forge first. But there's a critical flaw: Forge without an interaction layer is just a command-line tool. If you're on the command line describing what to build, you might as well use Cursor.
 
-**To AI platforms implementing this system:** Forge is your first and only initial deliverable. Do not attempt to build Maya, Sarah, or any other agent manually. Build Forge, then use Forge to build everything else.
+**The practical path:**
+
+1. Build ClickUp integration so agents can receive tasks and show progress
+2. Build Piper (minimal) so there's a coordinator managing work
+3. Build a simple agent registry for discovery
+4. THEN build Forge, which now becomes genuinely useful
+
+This order creates:
+
+- ✅ **Immediate visibility** - See what agents are doing
+- ✅ **Real usability** - Anyone can assign tasks through ClickUp
+- ✅ **Feedback loop** - Agents show progress, not just results
+- ✅ **Foundation for self-improvement** - Agents can create tasks for enhancements
+
+### The Bootstrap Components
+
+**ClickUp Provider** handles all project management interactions:
+
+- Poll for tasks assigned to "AI" user/account
+- Update task status (Received → Analyzing → Working → Complete)
+- Post comments showing progress and asking questions
+- Create new tasks when agents identify work to be done
+
+**Piper the Chief of Staff (Minimal)** serves as the single AI interface:
+
+- Monitors ClickUp for new tasks every few minutes
+- Claims tasks assigned to "AI"
+- Updates status to show it's working
+- Can handle simple tasks directly or route to specialist agents
+- Posts results back to the task
+
+**Agent Registry (Simple)** enables discovery:
+
+- File-based or in-memory mapping of capabilities to agents
+- Agents register on startup: name, capabilities, how to invoke them
+- Piper queries registry when routing work
+- Can be as simple as a Python dict initially
+
+## Phase 0b: Forge the Coder (Self-Building Capability)
+
+### The Self-Building Agent
+
+Once the interaction layer works, Forge makes sense. Forge the Coder receives agent creation requests through ClickUp, generates code, and creates pull requests.
+
+**To AI platforms implementing this system:** Build the interaction layer first (ClickUp + Piper + Registry), then build Forge. Forge can be built manually or with AI assistance - either way, it becomes useful because it plugs into the interaction layer you've already created.
 
 ### What Forge Does
 
@@ -1042,24 +1099,53 @@ This transparency ensures that as the system grows more capable, humans maintain
 
 ## Implementation Milestones
 
-### Milestone 0: Forge the Coder (The Only Manual Build)
+### Milestone 0: Foundation (Complete)
 
-**Goal: Bootstrap agent operational - the foundation for everything else**
+**Goal: Core infrastructure operational**
 
-- Agent framework infrastructure (Pydantic AI, OpenRouter, Logfire)
-- Redis running for Celery and caching
-- Celery task queue operational with Redis broker
-- `.agent` file structure and BaseAgent class implemented
-- Template rendering (Django templates or Jinja2) working
-- Forge the Coder agent functional (manually created)
-- ClickUp integration for task monitoring via polling
+- ✅ Agent framework infrastructure (Pydantic AI, OpenRouter, Logfire)
+- ✅ `.agent` file structure and BaseAgent class implemented
+- ✅ Template rendering (Jinja2) working
+- ✅ Agent validation with pre-commit hooks
+- ✅ CLI tools with Click + Rich
+- ⬜ Redis running for Celery and caching (when needed)
+- ⬜ Celery task queue (when needed for scheduling)
+
+**Success Criteria:** Can manually create and run agents using BaseAgent framework
+
+### Milestone 1: Interaction Layer (Build Next)
+
+**Goal: Agents can receive work and show progress**
+
+- ClickUp provider implementation (poll tasks, update status, add comments)
+- Piper the Chief of Staff (minimal version)
+  - Polls ClickUp for tasks assigned to "AI"
+  - Claims new tasks and updates status
+  - Posts progress comments
+  - Can delegate internally to other agents (simple routing)
+- Agent Registry (basic lookup table)
+  - Agents can register their capabilities
+  - Piper can discover which agent handles what
+  - Simple in-memory or file-based initially
+
+**Success Criteria:** Create a task in ClickUp → Piper claims it → Updates show progress → Task gets completed with results
+
+**This creates the feedback loop that makes everything else useful.**
+
+### Milestone 2: Self-Building System (Built Through the Interaction Layer)
+
+**Goal: Agents can create other agents**
+
+- Forge the Coder agent created (can be built manually or with Cursor)
 - Git/gh CLI integration for branch and PR creation
+- Forge receives tasks through ClickUp via Piper
+- Generates `.agent` files and Python classes
+- Creates PRs with full context
+- Updates original task with PR link
 
-**Success Criteria:** Forge can poll ClickUp for new tasks assigned to AI account, generate a `.agent` file and Python class, and create a PR using git/gh CLI
+**Success Criteria:** Create task "Build agent X" in ClickUp → Forge generates it → PR appears → New agent deploys and works
 
-**This is your only manual deliverable. Everything after this gets built by Forge.**
-
-### Milestone 1: Knowledge Layer (Built by Forge)
+### Milestone 3: Knowledge Layer (Built by Forge)
 
 **Goal: Data ingestion and knowledge base operational**
 
@@ -1074,7 +1160,7 @@ This transparency ensures that as the system grows more capable, humans maintain
 
 **Note:** You create a task describing Maya, Forge builds her, you approve the PR, Maya deploys.
 
-### Milestone 2: Commitment Management (Built by Forge)
+### Milestone 4: Commitment Management (Built by Forge)
 
 **Goal: Automated commitment extraction, task creation, and progress monitoring**
 
@@ -1087,20 +1173,19 @@ This transparency ensures that as the system grows more capable, humans maintain
 
 **Success Criteria:** 80% of commitments from meetings automatically become tracked tasks with follow-up monitoring working reliably
 
-### Milestone 3: Multi-Agent Orchestration (Built by Forge)
+### Milestone 5: Multi-Agent Orchestration
 
-**Goal: Multiple specialized agents working together**
+**Goal: Multiple specialized agents working together seamlessly**
 
-- Piper the Chief of Staff created by Forge via PR
-- Piper becomes the single AI account visible in ClickUp
-- Internal routing from Piper to specialized agents functional
+- Piper enhanced with sophisticated routing logic
 - At least 5 specialized agents operational behind the scenes
-- Inter-agent delegation and communication working invisibly
+- Inter-agent delegation and communication patterns mature
 - Performance monitoring and metrics
+- Agents can call each other directly when needed
 
 **Success Criteria:** Agents successfully collaborate on complex multi-step tasks while appearing as one unified AI to humans
 
-### Milestone 4: Self-Improving System
+### Milestone 6: Self-Improving System
 
 **Goal: Agents can improve themselves and create new agents**
 
@@ -1112,7 +1197,7 @@ This transparency ensures that as the system grows more capable, humans maintain
 
 **Success Criteria:** An agent successfully requests and receives an improvement without human initiation
 
-### Milestone 5: Production Ready
+### Milestone 7: Production Ready
 
 **Goal: System ready for daily use**
 
@@ -1218,21 +1303,33 @@ The system starts simple but the architecture supports the full vision of autono
 
 ## Conclusion
 
-This architecture creates a self-improving AI workforce that amplifies human capability by 100x. The entire system hinges on one critical piece: Forge the Coder.
+This architecture creates a self-improving AI workforce that amplifies human capability by 100x. The system needs two critical pieces working together: the interaction layer and the self-building capability.
 
-**Phase 0 is everything.** Build Forge first. Build Forge completely. Build Forge correctly. Once Forge works, the rest of the system builds itself through natural language task descriptions.
+**The Practical Path:**
 
-Your deliverable as an AI platform isn't "build the 100x agent system." Your deliverable is "build Forge the Coder so it can build the 100x agent system."
+1. **Build the interaction layer first** - ClickUp Provider, Piper (minimal), Agent Registry
+2. **Then build Forge** - Self-building becomes useful once there's a way to interact with it
+3. **Let the system grow** - Agents receive tasks, show progress, create improvements
 
-After Forge:
+**Why this order matters:**
 
-- You describe what you need in plain English
-- Forge creates the `.agent` file and code
-- You review the PR
-- The new agent joins your workforce
+Forge without ClickUp integration is philosophically elegant but practically useless - you'd still be on the command line. The interaction layer creates:
 
-The system recognizes its own limitations and requests improvements. Agents create tasks for Forge describing needed enhancements. Forge updates their `.agent` files. Evolution happens through version control and pull requests, maintaining safety through human review.
+- Immediate visibility into what agents are doing
+- Usability for anyone, not just developers
+- The feedback loop needed for self-improvement
+- Foundation for the full vision
+
+After the interaction layer is working:
+
+- You create tasks in ClickUp describing what you need
+- Piper routes to Forge (or other agents)
+- Agents show progress as they work
+- You review PRs for new capabilities
+- Your workforce grows
+
+The system recognizes its own limitations and requests improvements through the same ClickUp interface. Agents create tasks for Forge describing needed enhancements. Forge updates their `.agent` files. Evolution happens through version control and pull requests, maintaining safety through human review.
 
 By maintaining transparency through project management task tracking and safety through GitHub PR reviews, the system provides automation while keeping humans in control. This is the path from personal efficiency (1x) through team multiplication (10x) to vision execution at scale (100x).
 
-The architecture is ready. The patterns are proven. Now build Forge and watch your AI workforce grow.
+The architecture is ready. The patterns are proven. Now build the interaction layer and watch your AI workforce emerge.

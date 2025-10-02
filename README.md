@@ -84,7 +84,7 @@ This table shows actual implementation status versus planned functionality:
 | ---------------------------------- | ---------------------------- | -------------- | ----------------------------------------------- |
 | **Phase 0: Bootstrap**             |                              |                |                                                 |
 |                                    | Repository Setup             | ✅ Complete    | Tooling, AI rules, pre-commit hooks, CI/CD      |
-|                                    | Core Infrastructure          | ⬜ Not Started | Pydantic AI, OpenRouter, Logfire, Redis, Celery |
+|                                    | Agent Infrastructure         | 🚧 In Progress | Pydantic AI, OpenRouter, Logfire, Redis, Celery |
 |                                    | BaseAgent Framework          | ⬜ Not Started | Agent definition and execution framework        |
 |                                    | Forge the Coder              | ⬜ Not Started | The bootstrap agent that creates all others     |
 |                                    | Git/gh CLI Integration       | ⬜ Not Started | Branch and PR creation via CLI tools            |

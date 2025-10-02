@@ -2,7 +2,7 @@
 
 <img alt="100x Logo" src="./logo.png" style="width:25%" align="right"/>
 
-**⚡ Move at the speed of creativity. Execute on your visions. Stop drowning in information.**
+**Reclaim your presence. Build an AI team. Move at the speed of creativity.**
 
 You know AI could transform your work. You've heard about automation tools but they're too complex. You can see the value of AI employees but don't know how to build them.
 
@@ -21,7 +21,7 @@ Specifically:
 - Agents recognize their limitations and request new capabilities
 - They learn from patterns to improve their own performance
 
-You go from drowning in scattered information to having an AI team that handles the cognitive load while you focus on decisions and creative work.
+Your AI team handles the cognitive load while you focus on decisions and creative work.
 
 ## 📖 README-Driven Development
 

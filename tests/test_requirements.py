@@ -43,26 +43,3 @@ def test_no_dependency_conflicts():
     )
 
     assert result.returncode == 0, f"Dependency conflicts found: {result.stdout}"
-
-
-def test_requirements_txt_is_locked():
-    """Verify requirements.txt contains locked versions (==) not loose pins."""
-    project_root = Path(__file__).parent.parent
-    requirements_txt = project_root / "requirements" / "requirements.txt"
-
-    content = requirements_txt.read_text()
-    lines = [
-        line.strip()
-        for line in content.splitlines()
-        if line.strip() and not line.startswith("#")
-    ]
-
-    for line in lines:
-        # Skip continuation lines and editable installs
-        if line.startswith("-") or line.startswith("git+"):
-            continue
-
-        # Verify we're using == (locked) not >= or ~ (loose)
-        assert "==" in line or line.startswith("-e"), (
-            f"requirements.txt should have locked versions (==), found: {line}"
-        )

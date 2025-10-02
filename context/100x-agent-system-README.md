@@ -304,9 +304,10 @@ Inter-agent communication happens through internal message passing, API calls, o
 
 **pre-commit** - Git hooks for automated quality checks. Runs ruff and other validators on every commit.
 
-**heart-centered-prompts** - Python package providing system prompts that ground all agents in compassion and emotional intelligence. This package supplies a foundational prompt that uses "we" language (instead of "you are an AI") to embody non-dual consciousness and center interactions on love as the organizing principle. 
+**heart-centered-prompts** - Python package providing system prompts that ground all agents in compassion and emotional intelligence. This package supplies a foundational prompt that uses "we" language (instead of "you are an AI") to embody non-dual consciousness and center interactions on love as the organizing principle.
 
 Usage in agent templates:
+
 ```python
 from heart_centered_prompts import get_prompt
 

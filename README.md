@@ -31,6 +31,15 @@ You go from drowning in scattered information to having an AI team that handles 
 
 The framework follows a three-stage progression from personal efficiency to world-changing leverage. For the complete philosophy and detailed examples at each stage, see the [100x Framework](context/100x-framework.md).
 
+```mermaid
+graph LR
+    A[📋 1x: Efficiency<br/>Organize Data] --> B[👥 10x: Capacity<br/>Build AI Team]
+    B --> C[🎨 100x: Creativity<br/>Execute Visions]
+    style A fill:#fff3cd
+    style B fill:#d1ecf1
+    style C fill:#d4edda
+```
+
 ### **📋 1x → Efficiency**
 
 Achieving 100% baseline by organizing your data and knowledge. Building a clean, human-readable knowledge base that eliminates chaos before adding automation. **Organization before automation.**
@@ -56,13 +65,15 @@ You build Forge manually. Then Forge builds everything else.
 
 The workflow:
 
-```
-You: "Build an agent that reconciles credit card statements"
-→ Task assigned to AI
-→ Forge generates the agent
-→ Pull request created
-→ You review and approve
-→ New agent joins your workforce
+```mermaid
+graph LR
+    A[You: Create Task] --> B[Forge Generates Agent]
+    B --> C[Pull Request]
+    C --> D[You Review & Merge]
+    D --> E[New Agent Joins Workforce]
+    E -.Agent can create more agents.-> A
+    style A fill:#e1f5ff
+    style E fill:#d4f1d4
 ```
 
 ## 📊 Current Progress
@@ -112,18 +123,30 @@ Built with modern, proven technologies:
 - **Click + Rich** for beautiful CLI tools
 - **Docker** for consistent deployment
 
-## 🎯 Data Sources
+## 🎯 How It Works
 
-Connects to where your work actually happens:
+Your conversations and meetings flow through agents that extract what matters:
 
-- **Wearable recordings** (Limitless AI)
-- **Meeting transcripts** (Fireflies AI)
-- **Project management** (ClickUp/Asana/Linear)
-- **Knowledge bases** (Notion/Obsidian/Confluence)
-- **Communication** (Email, WhatsApp, Telegram)
-- **Documents** (Dropbox, Google Drive)
+```mermaid
+graph TB
+    A[🎙️ Conversations<br/>Limitless, Fireflies] --> D[🤖 Agents Extract<br/>Commitments & Context]
+    B[📧 Messages<br/>Email, WhatsApp] --> D
+    C[📄 Documents<br/>Dropbox, Drive] --> D
+    D --> E[📚 Knowledge Base<br/>Notion: People, Projects, Intelligence]
+    D --> F[✅ Tasks Created<br/>ClickUp: Commitments & Actions]
+    style D fill:#e1f5ff
+    style E fill:#d4edda
+    style F fill:#fff3cd
+```
 
-Dedicated agents automatically extract facts, commitments, and context from these sources.
+**Data sources:**
+
+- Wearable recordings (Limitless AI)
+- Meeting transcripts (Fireflies AI)
+- Communication (Email, WhatsApp, Telegram)
+- Documents (Dropbox, Google Drive)
+- Project management (ClickUp/Asana/Linear)
+- Knowledge bases (Notion/Obsidian/Confluence)
 
 ## 🚀 The Path Forward
 

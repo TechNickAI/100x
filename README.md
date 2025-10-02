@@ -2,7 +2,7 @@
 
 <img alt="100x Logo" src="./logo.png" style="width:25%" align="right"/>
 
-**Move at the speed of creativity. Execute on your visions. Stop drowning in information.**
+**⚡ Move at the speed of creativity. Execute on your visions. Stop drowning in information.**
 
 You know AI could transform your work. You've heard about automation tools but they're too complex. You can see the value of AI employees but don't know how to build them.
 
@@ -31,15 +31,15 @@ You go from drowning in scattered information to having an AI team that handles 
 
 The framework follows a three-stage progression from personal efficiency to world-changing leverage. For the complete philosophy and detailed examples at each stage, see the [100x Framework](context/100x-framework.md).
 
-### **1x → Efficiency**
+### **📋 1x → Efficiency**
 
 Achieving 100% baseline by organizing your data and knowledge. Building a clean, human-readable knowledge base that eliminates chaos before adding automation. **Organization before automation.**
 
-### **10x → Capacity**
+### **👥 10x → Capacity**
 
 Building an AI team where before there was only you. Specialized agents handle commitment tracking, memory management, research, and documentation while you focus on decisions and strategy. **One person becomes a team of ten.**
 
-### **100x → Creativity**
+### **🎨 100x → Creativity**
 
 Having an AI execution partner that turns visions into reality. Whether launching ventures, coordinating social impact, or validating research—the AI handles analysis, development, and deployment. **Go from idea to working prototype in days, not months.**
 
@@ -141,7 +141,7 @@ Once Forge works:
 4. Maya joins your workforce
 5. Repeat for each needed capability
 
-### Long-Term Vision
+### 🌱 Long-Term Vision
 
 Your AI workforce evolves with you:
 
